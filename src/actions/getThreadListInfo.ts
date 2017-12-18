@@ -1,5 +1,5 @@
+import { arrify, checkArrayParam, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { arrify, checkArrayParam, getOffset } from '../lib/util';
 import { Roger, Thread, ThreadListClient, ThreadListFolder, ThreadParticipant } from '../types';
 
 const availableFolders: ThreadListFolder[] = ['inbox', 'pending', 'archived', 'other'];

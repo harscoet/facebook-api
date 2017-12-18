@@ -1,6 +1,6 @@
+import { getFrom } from 'jsutil';
 import axios, { AxiosRequestConfig } from 'axios';
 import { AsyncLib } from './AsyncLib';
-import { getFrom } from './util';
 
 export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
   public static domains = [

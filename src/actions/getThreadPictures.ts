@@ -1,5 +1,5 @@
+import { getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { getOffset } from '../lib/util';
 
 export function getThreadPictures(request: FacebookRequest) {
   return async (threadId: string, options: GetThreadPictures.Options = {}): Promise<GetThreadPictures.Response> => {

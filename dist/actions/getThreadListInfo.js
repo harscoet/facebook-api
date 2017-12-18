@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../lib/util");
+const jsutil_1 = require("jsutil");
 const availableFolders = ['inbox', 'pending', 'archived', 'other'];
 const availableClients = ['mercury', 'jewel', 'web_messenger'];
 /**
@@ -17,12 +17,12 @@ const availableClients = ['mercury', 'jewel', 'web_messenger'];
 function getThreadListInfo(request) {
     return (options = {}) => __awaiter(this, void 0, void 0, function* () {
         const { client = 'mercury', limit = 10, page, offset: rawOffset, folders = ['inbox'], allFolders, } = options;
-        const selectedFolders = allFolders ? availableFolders : util_1.arrify(folders);
-        const offset = util_1.getOffset(limit, page, rawOffset);
+        const selectedFolders = allFolders ? availableFolders : jsutil_1.arrify(folders);
+        const offset = jsutil_1.getOffset(limit, page, rawOffset);
         const form = { client };
-        util_1.checkArrayParam(client, availableClients, 'client');
+        jsutil_1.checkArrayParam(client, availableClients, 'client');
         for (const folder of selectedFolders) {
-            util_1.checkArrayParam(folder, availableFolders, 'folder');
+            jsutil_1.checkArrayParam(folder, availableFolders, 'folder');
             form[folder] = {
                 limit,
                 offset,

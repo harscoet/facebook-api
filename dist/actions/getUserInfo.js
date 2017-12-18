@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../lib/util");
+const jsutil_1 = require("jsutil");
 function getUserInfo(request) {
     return (ids) => __awaiter(this, void 0, void 0, function* () {
         return request.post('chat/user_info', {
@@ -17,7 +17,7 @@ function getUserInfo(request) {
             parseResponse: true,
             payload: true,
             form: {
-                ids: util_1.arrify(ids),
+                ids: jsutil_1.arrify(ids),
             },
         });
     });

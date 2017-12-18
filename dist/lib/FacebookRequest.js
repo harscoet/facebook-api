@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const jsutil_1 = require("jsutil");
 const axios_1 = require("axios");
 const AsyncLib_1 = require("./AsyncLib");
-const util_1 = require("./util");
 class FacebookRequest extends AsyncLib_1.AsyncLib {
     static stringifyQuery(obj, prefix) {
         const pairs = [];
@@ -55,9 +55,9 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
     static getCurrentContext() {
         return __awaiter(this, void 0, void 0, function* () {
             const { data: html } = yield axios_1.default.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.default));
-            const fbDtsg = util_1.getFrom(html, 'name="fb_dtsg" value="', '"');
-            const revision = util_1.getFrom(html, 'revision":', ',');
-            const userId = util_1.getFrom(html, '"USER_ID":"', '"');
+            const fbDtsg = jsutil_1.getFrom(html, 'name="fb_dtsg" value="', '"');
+            const revision = jsutil_1.getFrom(html, 'revision":', ',');
+            const userId = jsutil_1.getFrom(html, '"USER_ID":"', '"');
             return {
                 __user: userId,
                 __req: 0,

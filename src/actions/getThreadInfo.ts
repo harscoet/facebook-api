@@ -1,5 +1,5 @@
+import { arrify, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { arrify, getOffset } from '../lib/util';
 import { Attachment, Roger, ThreadListClient, ThreadListFolder } from '../types';
 
 function addPagination(target: {}, key: string, arr: string|string[], limit: number, offset: number, timestamp?: number) {

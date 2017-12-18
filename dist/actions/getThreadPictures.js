@@ -8,11 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../lib/util");
+const jsutil_1 = require("jsutil");
 function getThreadPictures(request) {
     return (threadId, options = {}) => __awaiter(this, void 0, void 0, function* () {
         const { limit = 10, offset: rawOffset, page } = options;
-        const offset = util_1.getOffset(limit, page, rawOffset);
+        const offset = jsutil_1.getOffset(limit, page, rawOffset);
         const result = yield request.post('ajax/messaging/attachments/sharedphotos.php', {
             worksWithGetMethod: true,
             withContext: true,

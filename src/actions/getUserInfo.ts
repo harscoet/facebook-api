@@ -1,5 +1,5 @@
+import { arrify } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { arrify } from '../lib/util';
 import { User } from '../types';
 
 export function getUserInfo(request: FacebookRequest) {

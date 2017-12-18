@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../lib/util");
+const jsutil_1 = require("jsutil");
 function addPagination(target, key, arr, limit, offset, timestamp) {
-    for (const id of util_1.arrify(arr)) {
+    for (const id of jsutil_1.arrify(arr)) {
         if (!target[key]) {
             target[key] = {};
         }
@@ -24,7 +24,7 @@ function addPagination(target, key, arr, limit, offset, timestamp) {
 function getThreadInfo(request) {
     return (options = {}) => __awaiter(this, void 0, void 0, function* () {
         const { client, limit = 10, offset: rawOffset, page, threadFbids, threadIds, userIds, timestamp, } = options;
-        const offset = util_1.getOffset(limit, page, rawOffset);
+        const offset = jsutil_1.getOffset(limit, page, rawOffset);
         if (offset && !timestamp) {
             throw new Error('timestamp option is required when offset > 0');
         }
