@@ -1,0 +1,26 @@
+{
+  "name": "facebook-api",
+  "version": "0.0.1",
+  "description": "",
+  "license": "ISC",
+  "author": "Donovan Harscoet <donovan.harscoet@gmail.com> (https://github.com/harscoet/)",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc && webpack",
+    "lint": "tslint --project tsconfig.json",
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.1",
+    "expose-loader": "^0.7.4",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "axios": "^0.17.1"
+  }
+}
