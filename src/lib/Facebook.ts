@@ -8,6 +8,7 @@ import { GetFriendsList } from '../actions/getFriendsList';
 import { GetThreadHistoryGraphQL } from '../actions/getThreadHistoryGraphQL';
 import { GetThreadInfo } from '../actions/getThreadInfo';
 import { GetThreadListInfo } from '../actions/getThreadListInfo';
+import { GetThreadListInfoGraphQL } from '../actions/getThreadListInfoGraphQL';
 import { GetThreadPicture } from '../actions/getThreadPicture';
 import { GetThreadPictures } from '../actions/getThreadPictures';
 import { GetUserInfo } from '../actions/getUserInfo';
@@ -23,6 +24,7 @@ export class Facebook extends AsyncLib {
   public getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
   public getThreadInfo: GetThreadInfo;
   public getThreadListInfo: GetThreadListInfo;
+  public getThreadListInfoGraphQL: GetThreadListInfoGraphQL;
   public getThreadPicture: GetThreadPicture;
   public getThreadPictures: GetThreadPictures;
   public getUserInfo: GetUserInfo;

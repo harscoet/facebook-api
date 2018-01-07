@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsutil_1 = require("jsutil");
-const availableFolders = ['inbox', 'pending', 'archived', 'other'];
+const availableFolders = ['INBOX', 'PENDING', 'ARCHIVED', 'OTHER'];
 const availableClients = ['mercury', 'jewel', 'web_messenger'];
 /**
  * NO LONGER WORKING!

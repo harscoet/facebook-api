@@ -1,7 +1,7 @@
 /**
  * List of reusable types
  */
-export declare type ThreadListFolder = 'inbox' | 'pending' | 'archived' | 'other';
+export declare type ThreadListFolder = 'INBOX' | 'PENDING' | 'ARCHIVED' | 'OTHER' | 'UNREAD';
 export declare type ThreadListClient = 'mercury' | 'jewel' | 'web_messenger';
 export interface Roger {
     [key: string]: {

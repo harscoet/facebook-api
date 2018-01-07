@@ -7,6 +7,7 @@ __export(require("./getAttachmentImage"));
 __export(require("./getFriendsList"));
 __export(require("./getThreadInfo"));
 __export(require("./getThreadListInfo"));
+__export(require("./getThreadListInfoGraphQL"));
 __export(require("./getThreadHistoryGraphQL"));
 __export(require("./getThreadPictures"));
 __export(require("./getThreadPicture"));

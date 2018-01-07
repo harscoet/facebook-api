@@ -2,7 +2,7 @@ import { arrify, checkArrayParam, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { Roger, Thread, ThreadListClient, ThreadListFolder, ThreadParticipant } from '../types';
 
-const availableFolders: ThreadListFolder[] = ['inbox', 'pending', 'archived', 'other'];
+const availableFolders: ThreadListFolder[] = ['INBOX', 'PENDING', 'ARCHIVED', 'OTHER'];
 const availableClients: ThreadListClient[] = ['mercury', 'jewel', 'web_messenger'];
 
 /**
