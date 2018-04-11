@@ -4,6 +4,7 @@ import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
+import { GetFriendsActiveStatusList } from '../actions/getFriendsActiveStatusList';
 import { GetFriendsList } from '../actions/getFriendsList';
 import { GetThreadHistoryGraphQL } from '../actions/getThreadHistoryGraphQL';
 import { GetThreadInfo } from '../actions/getThreadInfo';
@@ -19,6 +20,7 @@ export declare class Facebook extends AsyncLib {
     actions: typeof actions;
     getAttachmentImage: GetAttachmentImage;
     getFriendsList: GetFriendsList;
+    getFriendsActiveStatusList: GetFriendsActiveStatusList;
     getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
     getThreadInfo: GetThreadInfo;
     getThreadListInfo: GetThreadListInfo;

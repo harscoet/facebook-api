@@ -4,6 +4,7 @@ import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
+import { GetFriendsActiveStatusList } from '../actions/getFriendsActiveStatusList';
 import { GetFriendsList } from '../actions/getFriendsList';
 import { GetThreadHistoryGraphQL } from '../actions/getThreadHistoryGraphQL';
 import { GetThreadInfo } from '../actions/getThreadInfo';
@@ -21,6 +22,7 @@ export class Facebook extends AsyncLib {
 
   public getAttachmentImage: GetAttachmentImage;
   public getFriendsList: GetFriendsList;
+  public getFriendsActiveStatusList: GetFriendsActiveStatusList;
   public getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
   public getThreadInfo: GetThreadInfo;
   public getThreadListInfo: GetThreadListInfo;

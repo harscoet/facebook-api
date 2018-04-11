@@ -4,6 +4,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./getAttachmentImage"));
+__export(require("./getFriendsActiveStatusList"));
 __export(require("./getFriendsList"));
 __export(require("./getThreadInfo"));
 __export(require("./getThreadListInfo"));

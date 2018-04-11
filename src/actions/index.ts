@@ -1,4 +1,5 @@
 export * from './getAttachmentImage';
+export * from './getFriendsActiveStatusList';
 export * from './getFriendsList';
 export * from './getThreadInfo';
 export * from './getThreadListInfo';
