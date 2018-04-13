@@ -1,6 +1,8 @@
 import { binaryToDecimal } from 'jsutil';
 import { Gender, User } from '../types';
 
+const RANDOM_VALUES = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
 export function isFemale(user: User) {
   return user.gender === Gender.female_plural || user.gender === Gender.female_singular || user.gender === Gender.female_singular_guess;
 }
@@ -16,4 +18,14 @@ export function generateOfflineThreadingID() {
   const msgs = ret.toString(2) + str;
 
   return binaryToDecimal(msgs);
+}
+
+export function generateId(size: number = 8) {
+  let id = '';
+
+  for (let i = 0; i < size; i++) {
+    id += RANDOM_VALUES.charAt(Math.floor(Math.random() * RANDOM_VALUES.length));
+  }
+
+  return id;
 }
