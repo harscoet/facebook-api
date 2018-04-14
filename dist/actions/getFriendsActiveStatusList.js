@@ -34,7 +34,7 @@ function getFriendsActiveStatusList(request) {
             }
         }
         else {
-            const url = 'https://edge-chat.messenger.com/pull';
+            const url = 'https://edge-chat.facebook.com/pull';
             const { msgr_region } = yield request.getMessengerContext();
             const commonQueryString = {
                 channel: `p_${request.context.__user}`,

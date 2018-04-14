@@ -27,7 +27,7 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
         }
       }
     } else {
-      const url = 'https://edge-chat.messenger.com/pull';
+      const url = 'https://edge-chat.facebook.com/pull';
       const { msgr_region } = await request.getMessengerContext();
 
       const commonQueryString = {
