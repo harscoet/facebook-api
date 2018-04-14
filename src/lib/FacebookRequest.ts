@@ -80,7 +80,16 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     };
   }
 
+  public static async getCurrentMessengerContext() {
+    const { data } = await axios.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.messenger));
+
+    return {
+      msgr_region: getFrom(data, '"msgr_region":"', '"'),
+    };
+  }
+
   public context: FacebookRequest.Context;
+  public messengerContext: FacebookRequest.MessengerContext;
 
   public async get<T>(url: string, options: FacebookRequest.Options = {}) {
     return this.request<T>(Object.assign({ url, method: 'get' }, options));
@@ -94,6 +103,12 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     await this.init();
 
     return this.context;
+  }
+
+  public async getMessengerContext() {
+    await this.init();
+
+    return this.messengerContext;
   }
 
   protected async request<T>(options: FacebookRequest.Options = {}): Promise<T> {
@@ -139,6 +154,10 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
       this.context = await FacebookRequest.getCurrentContext();
     }
 
+    if (!this.messengerContext) {
+      this.messengerContext = await FacebookRequest.getCurrentMessengerContext();
+    }
+
     return this;
   }
 }
@@ -172,5 +191,9 @@ export namespace FacebookRequest {
     __a: number;
     fb_dtsg: string;
     logging: string;
+  }
+
+  export interface MessengerContext {
+    msgr_region: string;
   }
 }

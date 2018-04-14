@@ -1,5 +1,5 @@
+import { generateId, rand } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { generateId } from '../lib/util';
 
 export function getFriendsActiveStatusList(request: FacebookRequest) {
   return async ({ filterId, legacy }: GetFriendsActiveStatusList.Options = {}): Promise<GetFriendsActiveStatusList.Response> => {
@@ -27,25 +27,45 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
         }
       }
     } else {
-      const res = await request.get<any>(`https://edge-chat.messenger.com/pull`, {
+      const url = 'https://edge-chat.messenger.com/pull';
+      const { msgr_region } = await request.getMessengerContext();
+
+      const commonQueryString = {
+        channel: `p_${request.context.__user}`,
+        partition: -2,
+        clientid: generateId(8),
+        isq: rand(10000, 99999),
+        idle: 1,
+        qp: 'y',
+        cap: 8,
+        pws: 'fresh',
+        msgs_recv: 0,
+        uid: request.context.__user,
+        viewer_uid: request.context.__user,
+        state: 'active',
+      };
+
+      const batchContext = await request.get<any>(url, {
         parseResponse: true,
         qs: {
-          channel: `p_${request.context.__user}`,
-          seq: 1,
-          partition: -2,
-          clientid: generateId(8),
+          ...commonQueryString,
           cb: generateId(4),
-          idle: 1,
-          qp: 'y',
-          cap: 8,
-          pws: 'fresh',
-          isq: 10635,
-          msgs_recv: 0,
-          uid: request.context.__user,
-          viewer_uid: request.context.__user,
-          sticky_token: 512,
-          sticky_pool: 'lla1c26_chat-proxy',
-          state: 'active',
+          seq: 0,
+          request_batch: 1,
+          msgr_region,
+        },
+      });
+
+      const lbInfo = batchContext.batches[0].lb_info;
+
+      const res = await request.get<any>(url, {
+        parseResponse: true,
+        qs: {
+          ...commonQueryString,
+          cb: generateId(4),
+          seq: 1,
+          sticky_token: lbInfo.sticky,
+          sticky_pool: lbInfo.pool,
         },
       });
 

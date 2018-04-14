@@ -68,6 +68,14 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
             };
         });
     }
+    static getCurrentMessengerContext() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { data } = yield axios_1.default.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.messenger));
+            return {
+                msgr_region: jsutil_1.getFrom(data, '"msgr_region":"', '"'),
+            };
+        });
+    }
     get(url, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.request(Object.assign({ url, method: 'get' }, options));
@@ -82,6 +90,12 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.init();
             return this.context;
+        });
+    }
+    getMessengerContext() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.init();
+            return this.messengerContext;
         });
     }
     request(options = {}) {
@@ -120,6 +134,9 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.context) {
                 this.context = yield FacebookRequest.getCurrentContext();
+            }
+            if (!this.messengerContext) {
+                this.messengerContext = yield FacebookRequest.getCurrentMessengerContext();
             }
             return this;
         });

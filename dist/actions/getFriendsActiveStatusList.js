@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const jsutil_1 = require("jsutil");
 const FacebookRequest_1 = require("../lib/FacebookRequest");
-const util_1 = require("../lib/util");
 function getFriendsActiveStatusList(request) {
     return ({ filterId, legacy } = {}) => __awaiter(this, void 0, void 0, function* () {
         yield request.init();
@@ -34,26 +34,30 @@ function getFriendsActiveStatusList(request) {
             }
         }
         else {
-            const res = yield request.get(`https://edge-chat.messenger.com/pull`, {
+            const url = 'https://edge-chat.messenger.com/pull';
+            const { msgr_region } = yield request.getMessengerContext();
+            const commonQueryString = {
+                channel: `p_${request.context.__user}`,
+                partition: -2,
+                clientid: jsutil_1.generateId(8),
+                isq: jsutil_1.rand(10000, 99999),
+                idle: 1,
+                qp: 'y',
+                cap: 8,
+                pws: 'fresh',
+                msgs_recv: 0,
+                uid: request.context.__user,
+                viewer_uid: request.context.__user,
+                state: 'active',
+            };
+            const batchContext = yield request.get(url, {
                 parseResponse: true,
-                qs: {
-                    channel: `p_${request.context.__user}`,
-                    seq: 1,
-                    partition: -2,
-                    clientid: util_1.generateId(8),
-                    cb: util_1.generateId(4),
-                    idle: 1,
-                    qp: 'y',
-                    cap: 8,
-                    pws: 'fresh',
-                    isq: 10635,
-                    msgs_recv: 0,
-                    uid: request.context.__user,
-                    viewer_uid: request.context.__user,
-                    sticky_token: 512,
-                    sticky_pool: 'lla1c26_chat-proxy',
-                    state: 'active',
-                },
+                qs: Object.assign({}, commonQueryString, { cb: jsutil_1.generateId(4), seq: 0, request_batch: 1, msgr_region }),
+            });
+            const lbInfo = batchContext.batches[0].lb_info;
+            const res = yield request.get(url, {
+                parseResponse: true,
+                qs: Object.assign({}, commonQueryString, { cb: jsutil_1.generateId(4), seq: 1, sticky_token: lbInfo.sticky, sticky_pool: lbInfo.pool }),
             });
             const buddyList = res.ms[0].buddyList;
             for (const id of Object.keys(buddyList)) {

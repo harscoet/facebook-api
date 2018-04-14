@@ -14,10 +14,15 @@ export declare class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOpt
         fb_dtsg: string;
         logging: string;
     }>;
+    static getCurrentMessengerContext(): Promise<{
+        msgr_region: string;
+    }>;
     context: FacebookRequest.Context;
+    messengerContext: FacebookRequest.MessengerContext;
     get<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     post<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     getContext(): Promise<FacebookRequest.Context>;
+    getMessengerContext(): Promise<FacebookRequest.MessengerContext>;
     protected request<T>(options?: FacebookRequest.Options): Promise<T>;
     protected _init(): Promise<this>;
 }
@@ -47,5 +52,8 @@ export declare namespace FacebookRequest {
         __a: number;
         fb_dtsg: string;
         logging: string;
+    }
+    interface MessengerContext {
+        msgr_region: string;
     }
 }
