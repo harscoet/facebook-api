@@ -44,7 +44,7 @@ export class Facebook extends AsyncLib {
   }
 
   public async getUserId(): Promise<string> {
-    return (await this.getContext()).__user;
+    return (await this.getContext()).common.__user;
   }
 }
 

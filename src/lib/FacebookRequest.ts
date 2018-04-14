@@ -63,35 +63,32 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     return JSON.parse(response.substring(9, length));
   }
 
-  public static async getCurrentContext() {
-    const { data: html } = await axios.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.default));
-
-    const fbDtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
-    const revision = getFrom(html, 'revision":', ',');
-    const userId = getFrom(html, '"USER_ID":"', '"');
-
-    return {
-      __user: userId,
-      __req: 0,
-      __rev: parseInt(revision, 10),
-      __a: 1,
-      fb_dtsg: fbDtsg,
-      logging: FacebookRequest.generateContextLogging(fbDtsg),
-    };
-  }
-
-  public static async getCurrentMessengerContext() {
+  public static async getCurrentContext(): Promise<FacebookRequest.Context> {
     const { data } = await axios.get('/messages', {
       baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
     });
 
+    const fbDtsg = getFrom(data, 'name="fb_dtsg" value="', '"');
+    const revision = getFrom(data, 'revision":', ',');
+    const userId = getFrom(data, '"USER_ID":"', '"');
+    const msgrRegion = getFrom(data, '"msgr_region":"', '"');
+
     return {
-      msgr_region: getFrom(data, '"msgr_region":"', '"'),
+      common: {
+        __user: userId,
+        __req: 0,
+        __rev: parseInt(revision, 10),
+        __a: 1,
+        fb_dtsg: fbDtsg,
+        logging: FacebookRequest.generateContextLogging(fbDtsg),
+      },
+      edgeChat: {
+        msgr_region: msgrRegion
+      }
     };
   }
 
   public context: FacebookRequest.Context;
-  public messengerContext: FacebookRequest.MessengerContext;
 
   public async get<T>(url: string, options: FacebookRequest.Options = {}) {
     return this.request<T>(Object.assign({ url, method: 'get' }, options));
@@ -107,12 +104,6 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     return this.context;
   }
 
-  public async getMessengerContext() {
-    await this.init();
-
-    return this.messengerContext;
-  }
-
   protected async request<T>(options: FacebookRequest.Options = {}): Promise<T> {
     await this.init();
 
@@ -120,10 +111,10 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     const domainValue = FacebookRequest.getDomainValue(domain);
 
     if (withContext && this.context) {
-      this.context.__req++;
+      this.context.common.__req++;
     }
 
-    const fullData = Object.assign({}, withContext ? this.context : {}, data, form);
+    const fullData = Object.assign({}, withContext ? this.context.common : {}, data, form);
     const dataString = FacebookRequest.stringifyQuery(fullData);
 
     const ajaxOptions = Object.assign({}, options, {
@@ -156,10 +147,6 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
       this.context = await FacebookRequest.getCurrentContext();
     }
 
-    if (!this.messengerContext) {
-      this.messengerContext = await FacebookRequest.getCurrentMessengerContext();
-    }
-
     return this;
   }
 }
@@ -187,15 +174,16 @@ export namespace FacebookRequest {
   }
 
   export interface Context {
-    __user: string;
-    __req: number;
-    __rev: number;
-    __a: number;
-    fb_dtsg: string;
-    logging: string;
-  }
-
-  export interface MessengerContext {
-    msgr_region: string;
+    common: {
+      __user: string;
+      __req: number;
+      __rev: number;
+      __a: number;
+      fb_dtsg: string;
+      logging: string;
+    };
+    edgeChat: {
+      msgr_region: string;
+    }
   }
 }

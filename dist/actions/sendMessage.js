@@ -31,7 +31,7 @@ function sendMessage(request) {
             other_user_fbid: id,
             ephemeral_ttl_mode: '0',
             has_attachment: !!(message.attachment || message.url || message.sticker),
-            specific_to_list: [`fbid:${id}`, `fbid:${request.context.__user}`],
+            specific_to_list: [`fbid:${id}`, `fbid:${request.context.common.__user}`],
         };
         return request.post('messaging/send', {
             worksWithGetMethod: true,

@@ -54,27 +54,25 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
     }
     static getCurrentContext() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { data: html } = yield axios_1.default.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.default));
-            const fbDtsg = jsutil_1.getFrom(html, 'name="fb_dtsg" value="', '"');
-            const revision = jsutil_1.getFrom(html, 'revision":', ',');
-            const userId = jsutil_1.getFrom(html, '"USER_ID":"', '"');
-            return {
-                __user: userId,
-                __req: 0,
-                __rev: parseInt(revision, 10),
-                __a: 1,
-                fb_dtsg: fbDtsg,
-                logging: FacebookRequest.generateContextLogging(fbDtsg),
-            };
-        });
-    }
-    static getCurrentMessengerContext() {
-        return __awaiter(this, void 0, void 0, function* () {
             const { data } = yield axios_1.default.get('/messages', {
                 baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
             });
+            const fbDtsg = jsutil_1.getFrom(data, 'name="fb_dtsg" value="', '"');
+            const revision = jsutil_1.getFrom(data, 'revision":', ',');
+            const userId = jsutil_1.getFrom(data, '"USER_ID":"', '"');
+            const msgrRegion = jsutil_1.getFrom(data, '"msgr_region":"', '"');
             return {
-                msgr_region: jsutil_1.getFrom(data, '"msgr_region":"', '"'),
+                common: {
+                    __user: userId,
+                    __req: 0,
+                    __rev: parseInt(revision, 10),
+                    __a: 1,
+                    fb_dtsg: fbDtsg,
+                    logging: FacebookRequest.generateContextLogging(fbDtsg),
+                },
+                edgeChat: {
+                    msgr_region: msgrRegion
+                }
             };
         });
     }
@@ -94,21 +92,15 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
             return this.context;
         });
     }
-    getMessengerContext() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.init();
-            return this.messengerContext;
-        });
-    }
     request(options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.init();
             const { url, domain, form, data, qs, withContext, parseResponse, payload } = options;
             const domainValue = FacebookRequest.getDomainValue(domain);
             if (withContext && this.context) {
-                this.context.__req++;
+                this.context.common.__req++;
             }
-            const fullData = Object.assign({}, withContext ? this.context : {}, data, form);
+            const fullData = Object.assign({}, withContext ? this.context.common : {}, data, form);
             const dataString = FacebookRequest.stringifyQuery(fullData);
             const ajaxOptions = Object.assign({}, options, {
                 method: this._options.forceGet && options.worksWithGetMethod ? 'get' : options.method,
@@ -136,9 +128,6 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.context) {
                 this.context = yield FacebookRequest.getCurrentContext();
-            }
-            if (!this.messengerContext) {
-                this.messengerContext = yield FacebookRequest.getCurrentMessengerContext();
             }
             return this;
         });

@@ -28,10 +28,10 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
       }
     } else {
       const url = 'https://edge-chat.facebook.com/pull';
-      const { msgr_region } = await request.getMessengerContext();
+      const { msgr_region } = request.context.edgeChat;
 
       const commonQueryString = {
-        channel: `p_${request.context.__user}`,
+        channel: `p_${request.context.common.__user}`,
         partition: -2,
         clientid: generateId(8),
         isq: rand(10000, 99999),
@@ -40,8 +40,8 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
         cap: 8,
         pws: 'fresh',
         msgs_recv: 0,
-        uid: request.context.__user,
-        viewer_uid: request.context.__user,
+        uid: request.context.common.__user,
+        viewer_uid: request.context.common.__user,
         state: 'active',
       };
 
