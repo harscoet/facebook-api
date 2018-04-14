@@ -17,7 +17,7 @@ function getFriendsList(request) {
             parseResponse: true,
             payload: true,
             form: {
-                viewer: request.context.common.__user,
+                viewer: request.context.__user,
             },
         });
         const users = {};

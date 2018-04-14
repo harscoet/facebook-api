@@ -6,11 +6,23 @@ export declare class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOpt
     static getDomainValue(domain: FacebookRequest.Domain): string;
     static generateContextLogging(fbDtsg: string): string;
     static parseResponse<T>(response: string): T;
-    static getCurrentContext(): Promise<FacebookRequest.Context>;
+    static getCurrentContext(): Promise<{
+        __user: string;
+        __req: number;
+        __rev: number;
+        __a: number;
+        fb_dtsg: string;
+        logging: string;
+    }>;
+    static getCurrentMessengerContext(): Promise<{
+        msgr_region: string;
+    }>;
     context: FacebookRequest.Context;
+    messengerContext: FacebookRequest.MessengerContext;
     get<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     post<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     getContext(): Promise<FacebookRequest.Context>;
+    getMessengerContext(): Promise<FacebookRequest.MessengerContext>;
     protected request<T>(options?: FacebookRequest.Options): Promise<T>;
     protected _init(): Promise<this>;
 }
@@ -34,16 +46,14 @@ export declare namespace FacebookRequest {
         worksWithGetMethod?: boolean;
     }
     interface Context {
-        common: {
-            __user: string;
-            __req: number;
-            __rev: number;
-            __a: number;
-            fb_dtsg: string;
-            logging: string;
-        };
-        edgeChat: {
-            msgr_region: string;
-        };
+        __user: string;
+        __req: number;
+        __rev: number;
+        __a: number;
+        fb_dtsg: string;
+        logging: string;
+    }
+    interface MessengerContext {
+        msgr_region: string;
     }
 }

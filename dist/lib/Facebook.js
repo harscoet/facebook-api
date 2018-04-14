@@ -26,7 +26,7 @@ class Facebook extends AsyncLib_1.AsyncLib {
     }
     getUserId() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (yield this.getContext()).common.__user;
+            return (yield this.getContext()).__user;
         });
     }
 }
