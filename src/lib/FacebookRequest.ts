@@ -81,7 +81,9 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
   }
 
   public static async getCurrentMessengerContext() {
-    const { data } = await axios.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.messenger));
+    const { data } = await axios.get('/messages', {
+      baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+    });
 
     return {
       msgr_region: getFrom(data, '"msgr_region":"', '"'),

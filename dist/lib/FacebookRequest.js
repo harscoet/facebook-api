@@ -70,7 +70,9 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
     }
     static getCurrentMessengerContext() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { data } = yield axios_1.default.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.messenger));
+            const { data } = yield axios_1.default.get('/messages', {
+                baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+            });
             return {
                 msgr_region: jsutil_1.getFrom(data, '"msgr_region":"', '"'),
             };
