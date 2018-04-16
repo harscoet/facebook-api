@@ -1,4 +1,5 @@
 export * from './getAttachmentImage';
+export * from './getFriendPhotos';
 export * from './getFriendsActiveStatusList';
 export * from './getFriendsList';
 export * from './getThreadInfo';
@@ -8,4 +9,5 @@ export * from './getThreadHistoryGraphQL';
 export * from './getThreadPictures';
 export * from './getThreadPicture';
 export * from './getUserInfo';
+export * from './searchFriends';
 export * from './sendMessage';

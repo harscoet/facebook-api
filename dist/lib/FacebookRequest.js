@@ -103,18 +103,19 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
     request(options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.init();
-            const { url, domain, form, data, qs, withContext, parseResponse, payload } = options;
+            const { url, domain, form, data, qs, withContext, parseResponse, payload, method } = options;
             const domainValue = FacebookRequest.getDomainValue(domain);
             if (withContext && this.context) {
                 this.context.__req++;
             }
             const fullData = Object.assign({}, withContext ? this.context : {}, data, form);
             const dataString = FacebookRequest.stringifyQuery(fullData);
+            const params = method === 'get' && withContext ? Object.assign({}, this.context, qs) : qs;
             const ajaxOptions = Object.assign({}, options, {
                 method: this._options.forceGet && options.worksWithGetMethod ? 'get' : options.method,
                 headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 url,
-                params: qs,
+                params,
                 baseURL: domainValue,
                 data: new URLSearchParams(dataString),
             });
