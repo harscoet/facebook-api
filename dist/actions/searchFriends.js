@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 function searchFriends(request) {
-    return (options = {}) => __awaiter(this, void 0, void 0, function* () {
+    return ({ search, limit } = {}) => __awaiter(this, void 0, void 0, function* () {
         yield request.init();
         const res = yield request.post('ajax/growth/friend_browser/checkbox.php', {
             worksWithGetMethod: true,
@@ -26,7 +26,7 @@ function searchFriends(request) {
                 big_pics: 1,
                 social_context: 1,
                 network_context: 1,
-                name_input: options.search,
+                name_input: search,
                 used_typeahead: false,
             },
         });
@@ -44,7 +44,7 @@ function searchFriends(request) {
                 name: $name ? $node.querySelector('.friendBrowserNameTitle a').innerHTML.replace(/<\/?span[^>]*>/g, '') : null,
             });
         });
-        return friends;
+        return limit ? friends.slice(0, limit) : friends;
     });
 }
 exports.searchFriends = searchFriends;

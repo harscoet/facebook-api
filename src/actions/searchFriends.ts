@@ -1,7 +1,7 @@
 import { FacebookRequest } from '../lib/FacebookRequest';
 
 export function searchFriends(request: FacebookRequest) {
-  return async (options: SearchFriends.Options = {}): Promise<SearchFriends.Response> => {
+  return async ({ search, limit }: SearchFriends.Options = {}): Promise<SearchFriends.Response> => {
     await request.init();
 
     const res = await request.post<SearchFriends.Response.Raw>('ajax/growth/friend_browser/checkbox.php', {
@@ -19,7 +19,7 @@ export function searchFriends(request: FacebookRequest) {
         big_pics: 1,
         social_context: 1,
         network_context: 1,
-        name_input: options.search,
+        name_input: search,
         used_typeahead: false,
       },
     });
@@ -42,13 +42,14 @@ export function searchFriends(request: FacebookRequest) {
       });
     });
 
-    return friends;
+    return limit ? friends.slice(0, limit) : friends;
   };
 }
 
 export namespace SearchFriends {
   export interface Options {
     search?: string;
+    limit?: number;
   }
 
   export namespace Response {
