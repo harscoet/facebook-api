@@ -24,6 +24,10 @@ export function searchFriends(request: FacebookRequest) {
       },
     });
 
+    if (!(res && res.results && res.results.__html)) {
+      return [];
+    }
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(res.results.__html, 'text/html');
     const friends: SearchFriends.Response = [];
