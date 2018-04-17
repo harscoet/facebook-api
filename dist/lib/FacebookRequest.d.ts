@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, CancelTokenSource } from 'axios';
 import { AsyncLib } from './AsyncLib';
 export declare class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     static domains: string[];
@@ -19,10 +19,13 @@ export declare class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOpt
     }>;
     context: FacebookRequest.Context;
     messengerContext: FacebookRequest.MessengerContext;
+    tokenSource: CancelTokenSource;
+    constructor(options?: FacebookRequest.DefaultOptions);
     get<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     post<T>(url: string, options?: FacebookRequest.Options): Promise<T>;
     getContext(): Promise<FacebookRequest.Context>;
     getMessengerContext(): Promise<FacebookRequest.MessengerContext>;
+    cancel(message?: string): void;
     protected request<T>(options?: FacebookRequest.Options): Promise<T>;
     protected _init(): Promise<this>;
 }

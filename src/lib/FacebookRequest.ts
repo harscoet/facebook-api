@@ -1,5 +1,5 @@
 import { getFrom } from 'jsutil';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, CancelTokenSource } from 'axios';
 import { AsyncLib } from './AsyncLib';
 
 export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
@@ -92,6 +92,12 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
 
   public context: FacebookRequest.Context;
   public messengerContext: FacebookRequest.MessengerContext;
+  public tokenSource: CancelTokenSource;
+
+  constructor(options: FacebookRequest.DefaultOptions = {}) {
+    super(options);
+    this.tokenSource = axios.CancelToken.source();
+  }
 
   public async get<T>(url: string, options: FacebookRequest.Options = {}) {
     return this.request<T>(Object.assign({ url, method: 'get' }, options));
@@ -111,6 +117,10 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     await this.init();
 
     return this.messengerContext;
+  }
+
+  public cancel(message?: string) {
+    return this.tokenSource.cancel(message);
   }
 
   protected async request<T>(options: FacebookRequest.Options = {}): Promise<T> {
@@ -134,6 +144,7 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
       params,
       baseURL: domainValue,
       data: new URLSearchParams(dataString),
+      cancelToken: this.tokenSource.token,
     });
 
     if (options.graphql) {
@@ -141,12 +152,12 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     }
 
     let parsedResponse;
-    const { data: result } = await axios(ajaxOptions);
+    const rawResponse = (await axios(ajaxOptions)).data;
 
     if (options.graphql) {
-      parsedResponse = result.split('\r\n').map(JSON.parse);
+      parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
     } else {
-      parsedResponse = parseResponse ? FacebookRequest.parseResponse<T>(result) : result;
+      parsedResponse = parseResponse ? FacebookRequest.parseResponse<T>(rawResponse) : rawResponse;
     }
 
     return payload ? parsedResponse.payload : parsedResponse;

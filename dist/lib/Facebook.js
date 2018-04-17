@@ -19,10 +19,10 @@ class Facebook extends AsyncLib_1.AsyncLib {
         this.types = types;
         this.lib = lib;
         this.actions = actions;
-        this._request = request ? request : new FacebookRequest_1.FacebookRequest(options);
+        this.request = request ? request : new FacebookRequest_1.FacebookRequest(options);
     }
     getContext() {
-        return this._request.getContext();
+        return this.request.getContext();
     }
     getUserId() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -34,7 +34,7 @@ exports.Facebook = Facebook;
 for (const i in actions) {
     if (actions.hasOwnProperty(i)) {
         Facebook.prototype[i] = function () {
-            return actions[i](this._request).apply(this, arguments);
+            return actions[i](this.request).apply(this, arguments);
         };
     }
 }

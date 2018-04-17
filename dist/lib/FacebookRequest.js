@@ -12,6 +12,10 @@ const jsutil_1 = require("jsutil");
 const axios_1 = require("axios");
 const AsyncLib_1 = require("./AsyncLib");
 class FacebookRequest extends AsyncLib_1.AsyncLib {
+    constructor(options = {}) {
+        super(options);
+        this.tokenSource = axios_1.default.CancelToken.source();
+    }
     static stringifyQuery(obj, prefix) {
         const pairs = [];
         for (const key in obj) {
@@ -100,6 +104,9 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
             return this.messengerContext;
         });
     }
+    cancel(message) {
+        return this.tokenSource.cancel(message);
+    }
     request(options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.init();
@@ -118,17 +125,18 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
                 params,
                 baseURL: domainValue,
                 data: new URLSearchParams(dataString),
+                cancelToken: this.tokenSource.token,
             });
             if (options.graphql) {
                 ajaxOptions.responseType = 'text';
             }
             let parsedResponse;
-            const { data: result } = yield axios_1.default(ajaxOptions);
+            const rawResponse = (yield axios_1.default(ajaxOptions)).data;
             if (options.graphql) {
-                parsedResponse = result.split('\r\n').map(JSON.parse);
+                parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
             }
             else {
-                parsedResponse = parseResponse ? FacebookRequest.parseResponse(result) : result;
+                parsedResponse = parseResponse ? FacebookRequest.parseResponse(rawResponse) : rawResponse;
             }
             return payload ? parsedResponse.payload : parsedResponse;
         });

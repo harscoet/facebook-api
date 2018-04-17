@@ -33,7 +33,7 @@ export declare class Facebook extends AsyncLib {
     getUserInfo: GetUserInfo;
     sendMessage: SendMessage;
     searchFriends: SearchFriends;
-    private _request;
+    request: FacebookRequest;
     constructor(options?: FacebookRequest.DefaultOptions, request?: FacebookRequest);
     getContext(): Promise<FacebookRequest.Context>;
     getUserId(): Promise<string>;

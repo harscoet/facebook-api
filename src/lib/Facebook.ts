@@ -36,15 +36,15 @@ export class Facebook extends AsyncLib {
   public sendMessage: SendMessage;
   public searchFriends: SearchFriends;
 
-  private _request: FacebookRequest;
+  public request: FacebookRequest;
 
   constructor(options: FacebookRequest.DefaultOptions = {}, request?: FacebookRequest) {
     super(options);
-    this._request = request ? request : new FacebookRequest(options);
+    this.request = request ? request : new FacebookRequest(options);
   }
 
   public getContext() {
-    return this._request.getContext();
+    return this.request.getContext();
   }
 
   public async getUserId(): Promise<string> {
@@ -55,7 +55,7 @@ export class Facebook extends AsyncLib {
 for (const i in actions) {
   if (actions.hasOwnProperty(i)) {
     Facebook.prototype[i] = function() {
-      return actions[i](this._request).apply(this, arguments);
+      return actions[i](this.request).apply(this, arguments);
     };
   }
 }
