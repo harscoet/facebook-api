@@ -12,7 +12,10 @@ const util_1 = require("../lib/util");
 function searchPeople(request) {
     return ({ search, limit } = {}) => __awaiter(this, void 0, void 0, function* () {
         yield request.init();
-        const friends = [];
+        const people = [];
+        if (!search) {
+            return people;
+        }
         const res = yield request.get(`search/people/?q=${search}`, {
             withContext: false,
             parseResponse: false,
@@ -20,12 +23,12 @@ function searchPeople(request) {
         });
         const $doc = util_1.findFromCodeTags(res, '#BrowseResultsContainer');
         $doc.querySelectorAll(':scope > div > div').forEach($node => {
-            friends.push({
+            people.push({
                 id: JSON.parse($node.getAttribute('data-bt')).id,
                 name: $node.querySelector('._32mo span').innerHTML,
             });
         });
-        return limit ? friends.slice(0, limit) : friends;
+        return limit ? people.slice(0, limit) : people;
     });
 }
 exports.searchPeople = searchPeople;

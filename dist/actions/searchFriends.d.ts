@@ -1,5 +1,5 @@
 import { FacebookRequest } from '../lib/FacebookRequest';
-export declare function searchFriends(request: FacebookRequest): ({search, limit}?: SearchFriends.Options) => Promise<SearchFriends.Friend[]>;
+export declare function searchPeople(request: FacebookRequest): ({search, limit}?: SearchFriends.Options) => Promise<SearchFriends.Friend[]>;
 export declare namespace SearchFriends {
     interface Options {
         search?: string;

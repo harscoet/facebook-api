@@ -4,7 +4,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./getAttachmentImage"));
-__export(require("./getFriendPhotos"));
+__export(require("./getPersonPhotos"));
 __export(require("./getFriendsActiveStatusList"));
 __export(require("./getFriendsList"));
 __export(require("./getThreadInfo"));
@@ -14,5 +14,5 @@ __export(require("./getThreadHistoryGraphQL"));
 __export(require("./getThreadPictures"));
 __export(require("./getThreadPicture"));
 __export(require("./getUserInfo"));
-__export(require("./searchFriends"));
+__export(require("./searchPeople"));
 __export(require("./sendMessage"));

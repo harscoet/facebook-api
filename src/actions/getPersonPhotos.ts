@@ -2,8 +2,8 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { getFrom } from 'jsutil';
 import { findFromCodeTags } from '../lib/util';
 
-export function getFriendPhotos(request: FacebookRequest) {
-  return async ({ id }: GetFriendPhotos.Options): Promise<GetFriendPhotos.Response> => {
+export function getPersonPhotos(request: FacebookRequest) {
+  return async ({ id }: GetPersonPhotos.Options): Promise<GetPersonPhotos.Response> => {
     await request.init();
 
     const photos: string[] = [];
@@ -38,7 +38,7 @@ export function getFriendPhotos(request: FacebookRequest) {
   };
 }
 
-export namespace GetFriendPhotos  {
+export namespace GetPersonPhotos  {
   export interface Options {
     id: string;
   }
@@ -55,4 +55,4 @@ export namespace GetFriendPhotos  {
   }
 }
 
-export type GetFriendPhotos = (options?: GetFriendPhotos.Options) => Promise<GetFriendPhotos.Response>;
+export type GetPersonPhotos = (options?: GetPersonPhotos.Options) => Promise<GetPersonPhotos.Response>;
