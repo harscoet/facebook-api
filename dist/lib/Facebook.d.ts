@@ -3,6 +3,7 @@ import * as types from '../types';
 import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
+import { DeleteThreads } from '../actions/deleteThreads';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
 import { GetPersonPhotos } from '../actions/getPersonPhotos';
 import { GetFriendsActiveStatusList } from '../actions/getFriendsActiveStatusList';
@@ -20,6 +21,7 @@ export declare class Facebook extends AsyncLib {
     types: typeof types;
     lib: typeof lib;
     actions: typeof actions;
+    deleteThreads: DeleteThreads;
     getAttachmentImage: GetAttachmentImage;
     getFriendsList: GetFriendsList;
     getPersonPhotos: GetPersonPhotos;
