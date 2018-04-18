@@ -17,3 +17,35 @@ export function generateOfflineThreadingID() {
 
   return binaryToDecimal(msgs);
 }
+
+export function parseHtmlFromString(value: string) {
+  return new DOMParser().parseFromString(value, 'text/html');
+}
+
+export function parseCommentedHtmlFromString(value: string) {
+  return parseHtmlFromString(value.slice(5, -4));
+}
+
+export function findFromCodeTags(htmlStringOrHtmlDom: string|Document, selector: string) {
+  let html: Document;
+
+  if (typeof htmlStringOrHtmlDom === 'string') {
+    html = parseHtmlFromString(htmlStringOrHtmlDom);
+  }
+
+  const $codes = html.querySelectorAll('code');
+  let $container;
+
+  $codes.forEach($code => {
+    const $candidateContainer = parseCommentedHtmlFromString($code.innerHTML)
+      .querySelector(selector);
+
+    if ($candidateContainer) {
+      $container = $candidateContainer;
+
+      return;
+    }
+  });
+
+  return $container;
+}

@@ -18,3 +18,29 @@ function generateOfflineThreadingID() {
     return jsutil_1.binaryToDecimal(msgs);
 }
 exports.generateOfflineThreadingID = generateOfflineThreadingID;
+function parseHtmlFromString(value) {
+    return new DOMParser().parseFromString(value, 'text/html');
+}
+exports.parseHtmlFromString = parseHtmlFromString;
+function parseCommentedHtmlFromString(value) {
+    return parseHtmlFromString(value.slice(5, -4));
+}
+exports.parseCommentedHtmlFromString = parseCommentedHtmlFromString;
+function findFromCodeTags(htmlStringOrHtmlDom, selector) {
+    let html;
+    if (typeof htmlStringOrHtmlDom === 'string') {
+        html = parseHtmlFromString(htmlStringOrHtmlDom);
+    }
+    const $codes = html.querySelectorAll('code');
+    let $container;
+    $codes.forEach($code => {
+        const $candidateContainer = parseCommentedHtmlFromString($code.innerHTML)
+            .querySelector(selector);
+        if ($candidateContainer) {
+            $container = $candidateContainer;
+            return;
+        }
+    });
+    return $container;
+}
+exports.findFromCodeTags = findFromCodeTags;

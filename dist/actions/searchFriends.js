@@ -8,40 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const util_1 = require("../lib/util");
 function searchFriends(request) {
     return ({ search, limit } = {}) => __awaiter(this, void 0, void 0, function* () {
         yield request.init();
-        const res = yield request.post('ajax/growth/friend_browser/checkbox.php', {
-            worksWithGetMethod: true,
-            withContext: true,
-            parseResponse: true,
-            payload: true,
-            qs: {
-                dpr: 2,
-            },
-            form: {
-                how_found: 'requests_page_pymk',
-                page: 'friend_browser_list',
-                instance_name: 'friend-browser',
-                big_pics: 1,
-                social_context: 1,
-                network_context: 1,
-                name_input: search,
-                used_typeahead: false,
-            },
-        });
-        if (!(res && res.results && res.results.__html)) {
-            return [];
-        }
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(res.results.__html, 'text/html');
         const friends = [];
-        doc.querySelectorAll('ul > li > div').forEach($node => {
-            const $id = $node.querySelector('.friendBrowserID');
-            const $name = $node.querySelector('.friendBrowserNameTitle a');
+        const res = yield request.get(`search/people/?q=${search}`, {
+            withContext: false,
+            parseResponse: false,
+            payload: false,
+        });
+        const $doc = util_1.findFromCodeTags(res, '#BrowseResultsContainer');
+        $doc.querySelectorAll(':scope > div > div').forEach($node => {
             friends.push({
-                id: $id ? $id.getAttribute('value') : null,
-                name: $name ? $node.querySelector('.friendBrowserNameTitle a').innerHTML.replace(/<\/?span[^>]*>/g, '') : null,
+                id: JSON.parse($node.getAttribute('data-bt')).id,
+                name: $node.querySelector('._32mo span').innerHTML,
             });
         });
         return limit ? friends.slice(0, limit) : friends;
