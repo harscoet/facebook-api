@@ -22,12 +22,14 @@ function searchPeople(request) {
             payload: false,
         });
         const $doc = util_1.findFromCodeTags(res, '#BrowseResultsContainer');
-        $doc.querySelectorAll(':scope > div > div').forEach($node => {
-            people.push({
-                id: JSON.parse($node.getAttribute('data-bt')).id,
-                name: $node.querySelector('._32mo span').innerHTML,
+        if ($doc) {
+            $doc.querySelectorAll(':scope > div > div').forEach($node => {
+                people.push({
+                    id: JSON.parse($node.getAttribute('data-bt')).id,
+                    name: $node.querySelector('._32mo span').innerHTML,
+                });
             });
-        });
+        }
         return limit ? people.slice(0, limit) : people;
     });
 }
