@@ -23,7 +23,7 @@ function searchPeople(request) {
         });
         const $doc = util_1.findFromCodeTags(res, '#BrowseResultsContainer');
         if ($doc) {
-            $doc.querySelectorAll(':scope > div > div').forEach($node => {
+            $doc.querySelectorAll('div[data-bt][data-ft]').forEach($node => {
                 people.push({
                     id: JSON.parse($node.getAttribute('data-bt')).id,
                     name: $node.querySelector('._32mo span').innerHTML,
