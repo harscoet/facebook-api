@@ -25,7 +25,7 @@ export abstract class AsyncLib<T extends AsyncLib.Options = AsyncLib.Options> {
     for (const property in this) {
       if (this.hasOwnProperty(property)) {
         if ((this[property] as any) instanceof AsyncLib) {
-          deps.push((this[property] as AsyncLib).init());
+          deps.push((this[property] as any).init());
         }
       }
     }
