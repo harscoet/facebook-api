@@ -3,6 +3,7 @@ import * as types from '../types';
 import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
+import { AddFriend } from '../actions/addFriend';
 import { DeleteThreads } from '../actions/deleteThreads';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
 import { GetPersonPhotos } from '../actions/getPersonPhotos';
@@ -23,6 +24,7 @@ export class Facebook extends AsyncLib {
   public lib = lib;
   public actions = actions;
 
+  public addFriend: AddFriend;
   public deleteThreads: DeleteThreads;
   public getAttachmentImage: GetAttachmentImage;
   public getFriendsList: GetFriendsList;
