@@ -54,7 +54,7 @@ function getFriendsActiveStatusList(request) {
                 parseResponse: true,
                 qs: Object.assign({}, commonQueryString, { cb: jsutil_1.generateId(4), seq: 0, request_batch: 1, msgr_region }),
             });
-            const lbInfo = batchContext.batches[0].lb_info;
+            const lbInfo = batchContext.lb_info;
             const res = yield request.get(url, {
                 parseResponse: true,
                 qs: Object.assign({}, commonQueryString, { cb: jsutil_1.generateId(4), seq: 1, sticky_token: lbInfo.sticky, sticky_pool: lbInfo.pool }),

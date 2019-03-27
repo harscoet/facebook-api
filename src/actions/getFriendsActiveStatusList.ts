@@ -56,7 +56,7 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
         },
       });
 
-      const lbInfo = batchContext.batches[0].lb_info;
+      const lbInfo = batchContext.lb_info;
 
       const res = await request.get<any>(url, {
         parseResponse: true,

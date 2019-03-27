@@ -1,5 +1,5 @@
 import { FacebookRequest } from '../lib/FacebookRequest';
-export declare function getPersonPhotos(request: FacebookRequest): ({ id }: GetPersonPhotos.Options) => Promise<GetPersonPhotos.Response>;
+export declare function getPersonPhotos(request: FacebookRequest): ({id}: GetPersonPhotos.Options) => Promise<GetPersonPhotos.Response>;
 export declare namespace GetPersonPhotos {
     interface Options {
         id: string;

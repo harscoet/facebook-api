@@ -7,8 +7,9 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "tsc --watch",
+    "start": "npm run build",
     "build": "tsc && webpack",
+    "dev": "tsc --watch",
     "lint": "tslint --project tsconfig.json",
     "webpack": "webpack"
   },
