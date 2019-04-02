@@ -15,6 +15,7 @@ __export(require("./getThreadListInfoGraphQL"));
 __export(require("./getThreadHistoryGraphQL"));
 __export(require("./getThreadPictures"));
 __export(require("./getThreadPicture"));
+__export(require("./getSharedMedia"));
 __export(require("./getUserInfo"));
 __export(require("./searchPeople"));
 __export(require("./sendMessage"));

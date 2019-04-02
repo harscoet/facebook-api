@@ -1,9 +1,9 @@
 import { arrify, checkArrayParam, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { Roger, Thread, ThreadListClient, ThreadListFolder, ThreadParticipant } from '../types';
+import { Roger, Thread } from '../types';
 
-const availableFolders: ThreadListFolder[] = ['INBOX', 'PENDING', 'ARCHIVED', 'OTHER'];
-const availableClients: ThreadListClient[] = ['mercury', 'jewel', 'web_messenger'];
+const availableFolders: Thread.ListFolder[] = ['INBOX', 'PENDING', 'ARCHIVED', 'OTHER'];
+const availableClients: Thread.ListClient[] = ['mercury', 'jewel', 'web_messenger'];
 
 /**
  * NO LONGER WORKING!
@@ -64,12 +64,12 @@ export function getThreadListInfo(request: FacebookRequest) {
 
 export namespace GetThreadListInfo {
   export interface Options {
-    client?: ThreadListClient;
+    client?: Thread.ListClient;
     limit?: number;
     offset?: number;
     page?: number;
     allFolders?: boolean;
-    folders?: ThreadListFolder|ThreadListFolder[];
+    folders?: Thread.ListFolder|Thread.ListFolder[];
   }
 
   export interface Response {
@@ -80,16 +80,16 @@ export namespace GetThreadListInfo {
       thread_ids: string[];
       thread_fbids: string[];
       other_user_fbids: string[];
-      folder: ThreadListFolder;
+      folder: Thread.ListFolder;
       filter: string;
       error: string;
     }>;
-    participants: ThreadParticipant[];
+    participants: Thread.Participant[];
     unseen_thread_fbids: Array<{
       thread_fbids: string[],
       other_user_fbids: string[],
       thread_ids: string[];
-      folder: ThreadListFolder;
+      folder: Thread.ListFolder;
     }>;
     roger: Roger;
     delivery_receipts: Array<{

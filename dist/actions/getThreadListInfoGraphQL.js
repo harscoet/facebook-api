@@ -47,3 +47,17 @@ function getThreadListInfoGraphQL(request) {
     });
 }
 exports.getThreadListInfoGraphQL = getThreadListInfoGraphQL;
+var GetThreadListInfoGraphQL;
+(function (GetThreadListInfoGraphQL) {
+    let Response;
+    (function (Response) {
+        let Thread;
+        (function (Thread) {
+            let Kind;
+            (function (Kind) {
+                Kind["ONE_TO_ONE"] = "ONE_TO_ONE";
+                Kind["GROUP"] = "GROUP";
+            })(Kind = Thread.Kind || (Thread.Kind = {}));
+        })(Thread = Response.Thread || (Response.Thread = {}));
+    })(Response = GetThreadListInfoGraphQL.Response || (GetThreadListInfoGraphQL.Response = {}));
+})(GetThreadListInfoGraphQL = exports.GetThreadListInfoGraphQL || (exports.GetThreadListInfoGraphQL = {}));

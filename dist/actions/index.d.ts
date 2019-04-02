@@ -10,6 +10,7 @@ export * from './getThreadListInfoGraphQL';
 export * from './getThreadHistoryGraphQL';
 export * from './getThreadPictures';
 export * from './getThreadPicture';
+export * from './getSharedMedia';
 export * from './getUserInfo';
 export * from './searchPeople';
 export * from './sendMessage';

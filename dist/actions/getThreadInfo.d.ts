@@ -1,9 +1,9 @@
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { Attachment, Roger, ThreadListClient, ThreadListFolder } from '../types';
+import { Attachment, Roger, Thread } from '../types';
 export declare function getThreadInfo(request: FacebookRequest): (options?: GetThreadInfo.Options) => Promise<GetThreadInfo.Response>;
 export declare namespace GetThreadInfo {
     interface Options {
-        client?: ThreadListClient;
+        client?: Thread.ListClient;
         threadIds?: string | string[];
         threadFbids?: string | string[];
         userIds?: string | string[];
@@ -34,7 +34,7 @@ export declare namespace GetThreadInfo {
             source_tags: string[];
             tags: string[];
             is_spoof_warning: boolean;
-            folder: ThreadListFolder;
+            folder: Thread.ListFolder;
             thread_fbid: string;
             other_user_fbid: string;
             platform_xmd: null;

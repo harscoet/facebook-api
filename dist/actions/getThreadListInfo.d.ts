@@ -1,17 +1,17 @@
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { Roger, Thread, ThreadListClient, ThreadListFolder, ThreadParticipant } from '../types';
+import { Roger, Thread } from '../types';
 /**
  * NO LONGER WORKING!
  */
 export declare function getThreadListInfo(request: FacebookRequest): (options?: GetThreadListInfo.Options) => Promise<GetThreadListInfo.Response>;
 export declare namespace GetThreadListInfo {
     interface Options {
-        client?: ThreadListClient;
+        client?: Thread.ListClient;
         limit?: number;
         offset?: number;
         page?: number;
         allFolders?: boolean;
-        folders?: ThreadListFolder | ThreadListFolder[];
+        folders?: Thread.ListFolder | Thread.ListFolder[];
     }
     interface Response {
         threads: Thread[];
@@ -21,16 +21,16 @@ export declare namespace GetThreadListInfo {
             thread_ids: string[];
             thread_fbids: string[];
             other_user_fbids: string[];
-            folder: ThreadListFolder;
+            folder: Thread.ListFolder;
             filter: string;
             error: string;
         }>;
-        participants: ThreadParticipant[];
+        participants: Thread.Participant[];
         unseen_thread_fbids: Array<{
             thread_fbids: string[];
             other_user_fbids: string[];
             thread_ids: string[];
-            folder: ThreadListFolder;
+            folder: Thread.ListFolder;
         }>;
         roger: Roger;
         delivery_receipts: Array<{

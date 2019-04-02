@@ -15,6 +15,7 @@ import { GetThreadListInfo } from '../actions/getThreadListInfo';
 import { GetThreadListInfoGraphQL } from '../actions/getThreadListInfoGraphQL';
 import { GetThreadPicture } from '../actions/getThreadPicture';
 import { GetThreadPictures } from '../actions/getThreadPictures';
+import { GetSharedMedia } from '../actions/getSharedMedia';
 import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
@@ -37,6 +38,7 @@ export class Facebook extends AsyncLib {
   public getThreadPicture: GetThreadPicture;
   public getThreadPictures: GetThreadPictures;
   public getUserInfo: GetUserInfo;
+  public getSharedMedia: GetSharedMedia;
   public sendMessage: SendMessage;
   public searchPeople: SearchPeople;
 

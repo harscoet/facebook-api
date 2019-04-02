@@ -1,6 +1,6 @@
 import { arrify, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { Attachment, Roger, ThreadListClient, ThreadListFolder } from '../types';
+import { Attachment, Roger, Thread } from '../types';
 
 function addPagination(target: {}, key: string, arr: string|string[], limit: number, offset: number, timestamp?: number) {
   for (const id of arrify(arr)) {
@@ -36,7 +36,7 @@ export function getThreadInfo(request: FacebookRequest) {
     }
 
     const form: {
-      client: ThreadListClient;
+      client: Thread.ListClient;
       messages: {}
     } = {
       client,
@@ -59,7 +59,7 @@ export function getThreadInfo(request: FacebookRequest) {
 
 export namespace GetThreadInfo {
   export interface Options {
-    client?: ThreadListClient;
+    client?: Thread.ListClient;
     threadIds?: string|string[];
     threadFbids?: string|string[];
     userIds?: string|string[];
@@ -91,7 +91,7 @@ export namespace GetThreadInfo {
       source_tags: string[];
       tags: string[];
       is_spoof_warning: boolean;
-      folder: ThreadListFolder;
+      folder: Thread.ListFolder;
       thread_fbid: string;
       other_user_fbid: string;
       platform_xmd: null;

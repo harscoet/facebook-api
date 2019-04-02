@@ -1,6 +1,6 @@
 import { arrify } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
-import { ThreadListFolder } from '../types';
+import { Thread as LegacyThread, Image } from '../types';
 
 export function getThreadListInfoGraphQL(request: FacebookRequest) {
   return async (options: GetThreadListInfoGraphQL.Options = {}): Promise<GetThreadListInfoGraphQL.Response> => {
@@ -52,15 +52,19 @@ export namespace GetThreadListInfoGraphQL {
   export interface Options {
     limit?: number;
     before?: string|number;
-    tags?: ThreadListFolder|ThreadListFolder[];
+    tags?: LegacyThread.ListFolder|LegacyThread.ListFolder[];
   }
 
   export namespace Response {
     export namespace Thread {
+      export enum Kind {
+        ONE_TO_ONE = 'ONE_TO_ONE',
+        GROUP = 'GROUP',
+      }
+
       export interface Participant {
-        big_image_src: {
-          uri: string;
-        };
+        __typename: string;
+        big_image_src: Image;
         gender: string;
         id: string;
         is_employee: boolean;
@@ -73,12 +77,12 @@ export namespace GetThreadListInfoGraphQL {
         short_name: string;
         url: string;
         username: string;
-        __typename: string;
       }
     }
 
     export interface Thread {
       thread_id: string;
+      name?: string;
       all_participants: {
         nodes: Array<{
           messaging_actor: Thread.Participant;
@@ -105,7 +109,7 @@ export namespace GetThreadListInfoGraphQL {
       mute_until: string;
       reactions_mute_mode: string;
       updated_time_precise: string;
-      thread_type: string;
+      thread_type: Thread.Kind;
       thread_key: {
         other_user_id: string;
         thread_fbid: string;
