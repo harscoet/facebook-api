@@ -44,7 +44,10 @@ export class Facebook extends AsyncLib {
 
   public request: FacebookRequest;
 
-  constructor(options: FacebookRequest.DefaultOptions = {}, request?: FacebookRequest) {
+  constructor(
+    options: FacebookRequest.DefaultOptions = {},
+    request?: FacebookRequest,
+  ) {
     super(options);
     this.request = request ? request : new FacebookRequest(options);
   }

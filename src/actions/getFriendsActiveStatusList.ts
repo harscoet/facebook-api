@@ -2,7 +2,12 @@ import { generateId, rand } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
 
 export function getFriendsActiveStatusList(request: FacebookRequest) {
-  return async ({ filterId, legacy }: GetFriendsActiveStatusList.Options = {}): Promise<GetFriendsActiveStatusList.Response> => {
+  return async ({
+    filterId,
+    legacy,
+  }: GetFriendsActiveStatusList.Options = {}): Promise<
+    GetFriendsActiveStatusList.Response
+  > => {
     await request.init();
 
     const friends = {};
@@ -99,4 +104,6 @@ export namespace GetFriendsActiveStatusList {
   }
 }
 
-export type GetFriendsActiveStatusList = (options?: GetFriendsActiveStatusList.Options) => Promise<GetFriendsActiveStatusList.Response>;
+export type GetFriendsActiveStatusList = (
+  options?: GetFriendsActiveStatusList.Options,
+) => Promise<GetFriendsActiveStatusList.Response>;

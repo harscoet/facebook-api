@@ -2,7 +2,9 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { Image } from '../types';
 
 export function getThreadHistoryGraphQL(request: FacebookRequest) {
-  return async (options: GetThreadHistoryGraphQL.Options = {}): Promise<GetThreadHistoryGraphQL.Response> => {
+  return async (
+    options: GetThreadHistoryGraphQL.Options = {},
+  ): Promise<GetThreadHistoryGraphQL.Response> => {
     /**
      * before is used for pagination, it is first message timestamp from previous page
      * ex: result.messages.nodes[0].timestamp_precise
@@ -30,10 +32,16 @@ export function getThreadHistoryGraphQL(request: FacebookRequest) {
       form,
     });
 
-    const message: GetThreadHistoryGraphQL.Response = (result[0] as any).o0.data.message_thread;
+    const message: GetThreadHistoryGraphQL.Response = (result[0] as any).o0.data
+      .message_thread;
 
     // With before option, facebook returns dupplicate message
-    if (before && message && message.messages && message.messages.nodes.length) {
+    if (
+      before &&
+      message &&
+      message.messages &&
+      message.messages.nodes.length
+    ) {
       message.messages.nodes.pop();
     }
 
@@ -45,7 +53,7 @@ export namespace GetThreadHistoryGraphQL {
   export interface Options {
     threadId?: string;
     limit?: number;
-    before?: string|number;
+    before?: string | number;
   }
 
   export namespace Response {
@@ -70,7 +78,7 @@ export namespace GetThreadHistoryGraphQL {
               key: string;
               value: {
                 text: number;
-              }
+              };
             }>;
             source: {
               text: string;
@@ -84,7 +92,7 @@ export namespace GetThreadHistoryGraphQL {
               text: string;
             };
             url: string;
-          }
+          };
         };
       }
 
@@ -237,4 +245,6 @@ export namespace GetThreadHistoryGraphQL {
   }
 }
 
-export type GetThreadHistoryGraphQL = (options?: GetThreadHistoryGraphQL.Options) => Promise<GetThreadHistoryGraphQL.Response>;
+export type GetThreadHistoryGraphQL = (
+  options?: GetThreadHistoryGraphQL.Options,
+) => Promise<GetThreadHistoryGraphQL.Response>;

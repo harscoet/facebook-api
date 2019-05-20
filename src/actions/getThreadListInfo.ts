@@ -2,14 +2,25 @@ import { arrify, checkArrayParam, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { Roger, Thread } from '../types';
 
-const availableFolders: Thread.ListFolder[] = ['INBOX', 'PENDING', 'ARCHIVED', 'OTHER'];
-const availableClients: Thread.ListClient[] = ['mercury', 'jewel', 'web_messenger'];
+const availableFolders: Thread.ListFolder[] = [
+  'INBOX',
+  'PENDING',
+  'ARCHIVED',
+  'OTHER',
+];
+const availableClients: Thread.ListClient[] = [
+  'mercury',
+  'jewel',
+  'web_messenger',
+];
 
 /**
  * NO LONGER WORKING!
  */
 export function getThreadListInfo(request: FacebookRequest) {
-  return async (options: GetThreadListInfo.Options = {}): Promise<GetThreadListInfo.Response> => {
+  return async (
+    options: GetThreadListInfo.Options = {},
+  ): Promise<GetThreadListInfo.Response> => {
     const {
       client = 'mercury',
       limit = 10,
@@ -34,13 +45,16 @@ export function getThreadListInfo(request: FacebookRequest) {
       };
     }
 
-    const result = await request.post<GetThreadListInfo.Response>('ajax/mercury/threadlist_info.php', {
-      worksWithGetMethod: true,
-      withContext: true,
-      parseResponse: true,
-      payload: true,
-      form,
-    });
+    const result = await request.post<GetThreadListInfo.Response>(
+      'ajax/mercury/threadlist_info.php',
+      {
+        worksWithGetMethod: true,
+        withContext: true,
+        parseResponse: true,
+        payload: true,
+        form,
+      },
+    );
 
     if (!result) {
       return {
@@ -69,7 +83,7 @@ export namespace GetThreadListInfo {
     offset?: number;
     page?: number;
     allFolders?: boolean;
-    folders?: Thread.ListFolder|Thread.ListFolder[];
+    folders?: Thread.ListFolder | Thread.ListFolder[];
   }
 
   export interface Response {
@@ -86,8 +100,8 @@ export namespace GetThreadListInfo {
     }>;
     participants: Thread.Participant[];
     unseen_thread_fbids: Array<{
-      thread_fbids: string[],
-      other_user_fbids: string[],
+      thread_fbids: string[];
+      other_user_fbids: string[];
       thread_ids: string[];
       folder: Thread.ListFolder;
     }>;
@@ -101,4 +115,6 @@ export namespace GetThreadListInfo {
   }
 }
 
-export type GetThreadListInfo = (options?: GetThreadListInfo.Options) => Promise<GetThreadListInfo.Response>;
+export type GetThreadListInfo = (
+  options?: GetThreadListInfo.Options,
+) => Promise<GetThreadListInfo.Response>;

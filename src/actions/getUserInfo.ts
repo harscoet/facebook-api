@@ -3,7 +3,7 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { User } from '../types';
 
 export function getUserInfo(request: FacebookRequest) {
-  return async (ids: string|string[]): Promise<GetUserInfo.Response> => {
+  return async (ids: string | string[]): Promise<GetUserInfo.Response> => {
     return request.post<GetUserInfo.Response>('chat/user_info', {
       worksWithGetMethod: true,
       withContext: true,
@@ -24,4 +24,6 @@ export namespace GetUserInfo {
   }
 }
 
-export type GetUserInfo = (ids: string|string[]) => Promise<GetUserInfo.Response>;
+export type GetUserInfo = (
+  ids: string | string[],
+) => Promise<GetUserInfo.Response>;

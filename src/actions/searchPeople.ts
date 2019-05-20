@@ -2,7 +2,9 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { findFromCodeTags } from '../lib/util';
 
 export function searchPeople(request: FacebookRequest) {
-  return async ({ search, limit }: SearchPeople.Options = {}): Promise<SearchPeople.Response> => {
+  return async ({ search, limit }: SearchPeople.Options = {}): Promise<
+    SearchPeople.Response
+  > => {
     await request.init();
 
     const people: SearchPeople.Person[] = [];
@@ -46,4 +48,6 @@ export namespace SearchPeople {
   export type Response = Person[];
 }
 
-export type SearchPeople = (options?: SearchPeople.Options) => Promise<SearchPeople.Response>;
+export type SearchPeople = (
+  options?: SearchPeople.Options,
+) => Promise<SearchPeople.Response>;

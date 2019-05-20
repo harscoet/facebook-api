@@ -1,8 +1,13 @@
 import { Gender } from './Gender';
 
 export namespace Thread {
-  export type ListClient = 'mercury'|'jewel'|'web_messenger';
-  export type ListFolder = 'INBOX'|'PENDING'|'ARCHIVED'|'OTHER'|'UNREAD';
+  export type ListClient = 'mercury' | 'jewel' | 'web_messenger';
+  export type ListFolder =
+    | 'INBOX'
+    | 'PENDING'
+    | 'ARCHIVED'
+    | 'OTHER'
+    | 'UNREAD';
 
   export interface Participant {
     id: string;

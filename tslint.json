@@ -1,20 +1,10 @@
 {
-  "extends": "tslint:recommended",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "interface-name": [
-      false
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "max-line-length": [
-      true,
-      300
-    ],
-    "variable-name": [
-      false
-    ],
+    "interface-name": [false],
+    "quotemark": [true, "single"],
+    "max-line-length": [true, 300],
+    "variable-name": [false],
     "object-literal-sort-keys": false,
     "arrow-parens": false,
     "newline-before-return": true,

@@ -3,7 +3,9 @@ import { getFrom } from 'jsutil';
 import { findFromCodeTags } from '../lib/util';
 
 export function getPersonPhotos(request: FacebookRequest) {
-  return async ({ id }: GetPersonPhotos.Options): Promise<GetPersonPhotos.Response> => {
+  return async ({
+    id,
+  }: GetPersonPhotos.Options): Promise<GetPersonPhotos.Response> => {
     await request.init();
 
     const photos: string[] = [];
@@ -38,7 +40,7 @@ export function getPersonPhotos(request: FacebookRequest) {
   };
 }
 
-export namespace GetPersonPhotos  {
+export namespace GetPersonPhotos {
   export interface Options {
     id: string;
   }
@@ -55,4 +57,6 @@ export namespace GetPersonPhotos  {
   }
 }
 
-export type GetPersonPhotos = (options?: GetPersonPhotos.Options) => Promise<GetPersonPhotos.Response>;
+export type GetPersonPhotos = (
+  options?: GetPersonPhotos.Options,
+) => Promise<GetPersonPhotos.Response>;

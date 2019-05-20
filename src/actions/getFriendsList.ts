@@ -3,17 +3,22 @@ import { isFemale, isMale } from '../lib/util';
 import { Gender, User } from '../types';
 
 export function getFriendsList(request: FacebookRequest) {
-  return async ({ gender }: GetFriendsList.Options = {}): Promise<GetFriendsList.Response> => {
+  return async ({ gender }: GetFriendsList.Options = {}): Promise<
+    GetFriendsList.Response
+  > => {
     await request.init();
 
-    const payload = await request.post<GetFriendsList.Response>('chat/user_info_all', {
-      withContext: true,
-      parseResponse: true,
-      payload: true,
-      form: {
-        viewer: request.context.__user,
+    const payload = await request.post<GetFriendsList.Response>(
+      'chat/user_info_all',
+      {
+        withContext: true,
+        parseResponse: true,
+        payload: true,
+        form: {
+          viewer: request.context.__user,
+        },
       },
-    });
+    );
 
     const users = {};
 
@@ -22,10 +27,12 @@ export function getFriendsList(request: FacebookRequest) {
         const user = payload[userId];
 
         if (user.is_friend) {
-          if (!gender ||
+          if (
+            !gender ||
             (typeof gender !== 'string' && user.gender === gender) ||
-            (gender === 'male' || gender === 'm') && isMale(user) ||
-            (gender === 'female' || gender === 'f') && isFemale(user)) {
+            ((gender === 'male' || gender === 'm') && isMale(user)) ||
+            ((gender === 'female' || gender === 'f') && isFemale(user))
+          ) {
             users[userId] = user;
           }
         }
@@ -46,4 +53,6 @@ export namespace GetFriendsList {
   }
 }
 
-export type GetFriendsList = (options?: GetFriendsList.Options) => Promise<GetFriendsList.Response>;
+export type GetFriendsList = (
+  options?: GetFriendsList.Options,
+) => Promise<GetFriendsList.Response>;

@@ -9,7 +9,7 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     'https://www.messenger.com',
   ];
 
-  public static stringifyQuery(obj, prefix?) {
+  public static stringifyQuery(obj: any, prefix?: string) {
     const pairs = [];
 
     for (const key in obj) {
@@ -19,12 +19,18 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
 
       const value = obj[key];
       const enkey = encodeURIComponent(key);
-      let pair;
+      let pair: string;
 
       if (typeof value === 'object') {
-        pair = FacebookRequest.stringifyQuery(value, prefix ? prefix + '[' + enkey + ']' : enkey);
+        pair = FacebookRequest.stringifyQuery(
+          value,
+          prefix ? `${prefix}[${enkey}]` : enkey,
+        );
       } else {
-        pair = (prefix ? prefix + '[' + enkey + ']' : enkey) + '=' + encodeURIComponent(value);
+        pair =
+          (prefix ? `${prefix}[${enkey}]` : enkey) +
+          '=' +
+          encodeURIComponent(value);
       }
 
       pairs.push(pair);
@@ -41,7 +47,9 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     const value = FacebookRequest.domains[domain];
 
     if (!value) {
-      throw new Error(`Invalid domain, possible values: ${FacebookRequest.domains.join()}`);
+      throw new Error(
+        `Invalid domain, possible values: ${FacebookRequest.domains.join()}`,
+      );
     }
 
     return value;
@@ -64,7 +72,9 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
   }
 
   public static async getCurrentContext() {
-    const { data: html } = await axios.get(FacebookRequest.getDomainValue(FacebookRequest.Domain.default));
+    const { data: html } = await axios.get(
+      FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+    );
 
     const fbDtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
     const revision = getFrom(html, 'revision":', ',');
@@ -123,22 +133,43 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     return this.tokenSource.cancel(message);
   }
 
-  protected async request<T>(options: FacebookRequest.Options = {}): Promise<T> {
+  protected async request<T>(
+    options: FacebookRequest.Options = {},
+  ): Promise<T> {
     await this.init();
 
-    const { url, domain, form, data, qs, withContext, parseResponse, payload, method } = options;
+    const {
+      url,
+      domain,
+      form,
+      data,
+      qs,
+      withContext,
+      parseResponse,
+      payload,
+      method,
+    } = options;
     const domainValue = FacebookRequest.getDomainValue(domain);
 
     if (withContext && this.context) {
       this.context.__req++;
     }
 
-    const fullData = Object.assign({}, withContext ? this.context : {}, data, form);
+    const fullData = Object.assign(
+      {},
+      withContext ? this.context : {},
+      data,
+      form,
+    );
     const dataString = FacebookRequest.stringifyQuery(fullData);
-    const params = method === 'get' && withContext ? { ...this.context, ...qs } : qs;
+    const params =
+      method === 'get' && withContext ? { ...this.context, ...qs } : qs;
 
     const ajaxOptions = Object.assign({}, options, {
-      method: this._options.forceGet && options.worksWithGetMethod ? 'get' : options.method,
+      method:
+        this._options.forceGet && options.worksWithGetMethod
+          ? 'get'
+          : options.method,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       url,
       params,
@@ -157,7 +188,9 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     if (options.graphql) {
       parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
     } else {
-      parsedResponse = parseResponse ? FacebookRequest.parseResponse<T>(rawResponse) : rawResponse;
+      parsedResponse = parseResponse
+        ? FacebookRequest.parseResponse<T>(rawResponse)
+        : rawResponse;
     }
 
     return payload ? parsedResponse.payload : parsedResponse;

@@ -2,11 +2,19 @@ import { binaryToDecimal } from 'jsutil';
 import { Gender, User } from '../types';
 
 export function isFemale(user: User) {
-  return user.gender === Gender.female_plural || user.gender === Gender.female_singular || user.gender === Gender.female_singular_guess;
+  return (
+    user.gender === Gender.female_plural ||
+    user.gender === Gender.female_singular ||
+    user.gender === Gender.female_singular_guess
+  );
 }
 
 export function isMale(user: User) {
-  return user.gender === Gender.male_plural || user.gender === Gender.male_singular || user.gender === Gender.male_singular_guess;
+  return (
+    user.gender === Gender.male_plural ||
+    user.gender === Gender.male_singular ||
+    user.gender === Gender.male_singular_guess
+  );
 }
 
 export function generateOfflineThreadingID() {
@@ -26,7 +34,10 @@ export function parseCommentedHtmlFromString(value: string) {
   return parseHtmlFromString(value.slice(5, -4));
 }
 
-export function findFromCodeTags(htmlStringOrHtmlDom: string|Document, selector: string) {
+export function findFromCodeTags(
+  htmlStringOrHtmlDom: string | Document,
+  selector: string,
+) {
   let html: Document;
 
   if (typeof htmlStringOrHtmlDom === 'string') {
@@ -37,8 +48,9 @@ export function findFromCodeTags(htmlStringOrHtmlDom: string|Document, selector:
   let $container;
 
   $codes.forEach($code => {
-    const $candidateContainer = parseCommentedHtmlFromString($code.innerHTML)
-      .querySelector(selector);
+    const $candidateContainer = parseCommentedHtmlFromString(
+      $code.innerHTML,
+    ).querySelector(selector);
 
     if ($candidateContainer) {
       $container = $candidateContainer;

@@ -7,8 +7,6 @@
     "noUnusedLocals": true,
     "declaration": true
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "plugins": [{ "name": "typescript-tslint-plugin" }],
+  "exclude": ["node_modules", "dist"]
 }

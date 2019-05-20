@@ -1,5 +1,11 @@
 export interface Attachment {
-  app_attribution: 'error'|'share'|'photo'|'sticker'|'animated_image'|'video';
+  app_attribution:
+    | 'error'
+    | 'share'
+    | 'photo'
+    | 'sticker'
+    | 'animated_image'
+    | 'video';
   attach_type: string;
   name: string;
   url: string;
@@ -21,7 +27,7 @@ export interface Attachment {
   share: {
     description: string;
     media: {
-      animated_image: string,
+      animated_image: string;
       animated_image_size: {
         height: number;
         width: number;
@@ -34,7 +40,7 @@ export interface Attachment {
       duration: number;
       playable: boolean;
       source: string;
-    },
+    };
     source: string;
     style_list: string[];
     target: string;

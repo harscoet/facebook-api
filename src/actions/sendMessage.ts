@@ -2,7 +2,10 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { generateOfflineThreadingID } from '../lib/util';
 
 export function sendMessage(request: FacebookRequest) {
-  return async (id: string, message: string|SendMessage.Message = ''): Promise<SendMessage.Response> => {
+  return async (
+    id: string,
+    message: string | SendMessage.Message = '',
+  ): Promise<SendMessage.Response> => {
     await request.init();
 
     if (typeof message === 'string') {
@@ -55,4 +58,7 @@ export namespace SendMessage {
   }
 }
 
-export type SendMessage = (id: string, message: string|SendMessage.Message) => Promise<SendMessage.Response>;
+export type SendMessage = (
+  id: string,
+  message: string | SendMessage.Message,
+) => Promise<SendMessage.Response>;

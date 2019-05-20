@@ -3,7 +3,9 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { Thread as LegacyThread, Image } from '../types';
 
 export function getThreadListInfoGraphQL(request: FacebookRequest) {
-  return async (options: GetThreadListInfoGraphQL.Options = {}): Promise<GetThreadListInfoGraphQL.Response> => {
+  return async (
+    options: GetThreadListInfoGraphQL.Options = {},
+  ): Promise<GetThreadListInfoGraphQL.Response> => {
     /**
      * before is used for pagination, it is first message timestamp from previous page
      * ex: result.messages.nodes[0].timestamp_precise
@@ -32,7 +34,9 @@ export function getThreadListInfoGraphQL(request: FacebookRequest) {
       form,
     });
 
-    const threads: { nodes: GetThreadListInfoGraphQL.Response.Thread[] } = (result[0] as any).o0.data.viewer.message_threads;
+    const threads: {
+      nodes: GetThreadListInfoGraphQL.Response.Thread[];
+    } = (result[0] as any).o0.data.viewer.message_threads;
 
     // With before option, facebook returns dupplicate message
     if (before && threads && threads.nodes.length) {
@@ -51,8 +55,8 @@ export function getThreadListInfoGraphQL(request: FacebookRequest) {
 export namespace GetThreadListInfoGraphQL {
   export interface Options {
     limit?: number;
-    before?: string|number;
-    tags?: LegacyThread.ListFolder|LegacyThread.ListFolder[];
+    before?: string | number;
+    tags?: LegacyThread.ListFolder | LegacyThread.ListFolder[];
   }
 
   export namespace Response {
@@ -122,4 +126,6 @@ export namespace GetThreadListInfoGraphQL {
   }
 }
 
-export type GetThreadListInfoGraphQL = (options?: GetThreadListInfoGraphQL.Options) => Promise<GetThreadListInfoGraphQL.Response>;
+export type GetThreadListInfoGraphQL = (
+  options?: GetThreadListInfoGraphQL.Options,
+) => Promise<GetThreadListInfoGraphQL.Response>;

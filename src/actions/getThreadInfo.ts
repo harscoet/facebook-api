@@ -2,7 +2,14 @@ import { arrify, getOffset } from 'jsutil';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { Attachment, Roger, Thread } from '../types';
 
-function addPagination(target: {}, key: string, arr: string|string[], limit: number, offset: number, timestamp?: number) {
+function addPagination(
+  target: {},
+  key: string,
+  arr: string | string[],
+  limit: number,
+  offset: number,
+  timestamp?: number,
+) {
   for (const id of arrify(arr)) {
     if (!target[key]) {
       target[key] = {};
@@ -17,7 +24,9 @@ function addPagination(target: {}, key: string, arr: string|string[], limit: num
 }
 
 export function getThreadInfo(request: FacebookRequest) {
-  return async (options: GetThreadInfo.Options = {}): Promise<GetThreadInfo.Response> => {
+  return async (
+    options: GetThreadInfo.Options = {},
+  ): Promise<GetThreadInfo.Response> => {
     const {
       client,
       limit = 10,
@@ -37,32 +46,49 @@ export function getThreadInfo(request: FacebookRequest) {
 
     const form: {
       client: Thread.ListClient;
-      messages: {}
+      messages: {};
     } = {
       client,
       messages: {},
     };
 
-    addPagination(form.messages, 'thread_ids', threadIds, limit, offset, timestamp);
-    addPagination(form.messages, 'thread_fbids', threadFbids, limit, offset, timestamp);
+    addPagination(
+      form.messages,
+      'thread_ids',
+      threadIds,
+      limit,
+      offset,
+      timestamp,
+    );
+    addPagination(
+      form.messages,
+      'thread_fbids',
+      threadFbids,
+      limit,
+      offset,
+      timestamp,
+    );
     addPagination(form.messages, 'user_ids', userIds, limit, offset, timestamp);
 
-    return request.post<GetThreadInfo.Response>('ajax/mercury/thread_info.php', {
-      worksWithGetMethod: true,
-      withContext: true,
-      parseResponse: true,
-      payload: true,
-      form,
-    });
+    return request.post<GetThreadInfo.Response>(
+      'ajax/mercury/thread_info.php',
+      {
+        worksWithGetMethod: true,
+        withContext: true,
+        parseResponse: true,
+        payload: true,
+        form,
+      },
+    );
   };
 }
 
 export namespace GetThreadInfo {
   export interface Options {
     client?: Thread.ListClient;
-    threadIds?: string|string[];
-    threadFbids?: string|string[];
-    userIds?: string|string[];
+    threadIds?: string | string[];
+    threadFbids?: string | string[];
+    userIds?: string | string[];
     limit?: number;
     offset?: number;
     page?: number;
@@ -86,7 +112,7 @@ export namespace GetThreadInfo {
       is_filtered_content_invalid_app: boolean;
       is_sponsored: boolean;
       commerce_message_type: string;
-      customizations: string[],
+      customizations: string[];
       source: string;
       source_tags: string[];
       tags: string[];
@@ -108,9 +134,9 @@ export namespace GetThreadInfo {
       meta_ranges: string[];
       log_message_type: string;
       log_message_data: {
-        untypedData: object,
+        untypedData: object;
         message_type: string;
-      },
+      };
       log_message_body: string;
       thread_id: string;
       action_type: string;
@@ -125,4 +151,6 @@ export namespace GetThreadInfo {
   }
 }
 
-export type GetThreadInfo = (options?: GetThreadInfo.Options) => Promise<GetThreadInfo.Response>;
+export type GetThreadInfo = (
+  options?: GetThreadInfo.Options,
+) => Promise<GetThreadInfo.Response>;

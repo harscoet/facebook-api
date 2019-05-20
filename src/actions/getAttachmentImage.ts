@@ -2,7 +2,10 @@ import { FacebookRequest } from '../lib/FacebookRequest';
 import { Image } from '../types';
 
 export function getAttachmentImage(request: FacebookRequest) {
-  return async (threadId: string, imageId: string): Promise<GetAttachmentImage.Response> => {
+  return async (
+    threadId: string,
+    imageId: string,
+  ): Promise<GetAttachmentImage.Response> => {
     const queryId = '535955503408405';
 
     const result = await request.post<string>('webgraphql/query/', {
@@ -38,4 +41,7 @@ export namespace GetAttachmentImage {
   }
 }
 
-export type GetAttachmentImage = (threadId: string, imageId: string) => Promise<GetAttachmentImage.Response>;
+export type GetAttachmentImage = (
+  threadId: string,
+  imageId: string,
+) => Promise<GetAttachmentImage.Response>;
