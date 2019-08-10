@@ -51,6 +51,9 @@ export namespace GetSharedMedia {
     export namespace Node {
       export enum Kind {
         MessageImage = 'MessageImage',
+        MessageVideo = 'MessageVideo',
+        MessageFile = 'MessageFile',
+        MessageAudio = 'MessageAudio',
       }
     }
 
