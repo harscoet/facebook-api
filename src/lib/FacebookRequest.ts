@@ -9,6 +9,41 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     'https://www.messenger.com',
   ];
 
+  public static async request(
+    options: AxiosRequestConfig,
+    transform?: (payload: any) => any,
+  ) {
+    const isDev = FacebookRequest.isDev;
+    let sessionStorageKey: string;
+
+    if (isDev) {
+      sessionStorageKey =
+        'fbapi_' +
+        JSON.stringify({
+          ...options,
+          headers: undefined,
+          cancelToken: undefined,
+        });
+
+      const responseFromSessionStorage = sessionStorage.getItem(
+        sessionStorageKey,
+      );
+
+      if (responseFromSessionStorage) {
+        return JSON.parse(responseFromSessionStorage);
+      }
+    }
+
+    const rawResponse = (await axios(options)).data;
+    const response = transform ? transform(rawResponse) : rawResponse;
+
+    if (isDev) {
+      sessionStorage.setItem(sessionStorageKey, JSON.stringify(response));
+    }
+
+    return response;
+  }
+
   public static stringifyQuery(obj: any, prefix?: string) {
     const pairs = [];
 
@@ -72,32 +107,43 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
   }
 
   public static async getCurrentContext() {
-    const { data: html } = await axios.get(
-      FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+    return FacebookRequest.request(
+      {
+        method: 'get',
+        url: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+      },
+      html => {
+        const fbDtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
+        const revision = getFrom(html, 'revision":', ',');
+        const userId = getFrom(html, '"USER_ID":"', '"');
+
+        return {
+          __user: userId,
+          __req: 0,
+          __rev: parseInt(revision, 10),
+          __a: 1,
+          fb_dtsg: fbDtsg,
+          logging: FacebookRequest.generateContextLogging(fbDtsg),
+        };
+      },
     );
-
-    const fbDtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
-    const revision = getFrom(html, 'revision":', ',');
-    const userId = getFrom(html, '"USER_ID":"', '"');
-
-    return {
-      __user: userId,
-      __req: 0,
-      __rev: parseInt(revision, 10),
-      __a: 1,
-      fb_dtsg: fbDtsg,
-      logging: FacebookRequest.generateContextLogging(fbDtsg),
-    };
   }
 
   public static async getCurrentMessengerContext() {
-    const { data } = await axios.get('/messages', {
-      baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
-    });
+    return FacebookRequest.request(
+      {
+        method: 'get',
+        baseURL: FacebookRequest.getDomainValue(FacebookRequest.Domain.default),
+        url: '/messages',
+      },
+      data => ({
+        msgr_region: getFrom(data, '"msgr_region":"', '"'),
+      }),
+    );
+  }
 
-    return {
-      msgr_region: getFrom(data, '"msgr_region":"', '"'),
-    };
+  private static get isDev(): boolean {
+    return localStorage.getItem('facebook_api_is_dev') !== null;
   }
 
   public context: FacebookRequest.Context;
@@ -165,7 +211,7 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     const params =
       method === 'get' && withContext ? { ...this.context, ...qs } : qs;
 
-    const ajaxOptions = Object.assign({}, options, {
+    const requestOptions = Object.assign({}, options, {
       method:
         this._options.forceGet && options.worksWithGetMethod
           ? 'get'
@@ -179,21 +225,22 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     });
 
     if (options.graphql) {
-      ajaxOptions.responseType = 'text';
+      requestOptions.responseType = 'text';
     }
 
-    let parsedResponse;
-    const rawResponse = (await axios(ajaxOptions)).data;
+    return FacebookRequest.request(requestOptions, rawResponse => {
+      let parsedResponse: any;
 
-    if (options.graphql) {
-      parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
-    } else {
-      parsedResponse = parseResponse
-        ? FacebookRequest.parseResponse<T>(rawResponse)
-        : rawResponse;
-    }
+      if (options.graphql) {
+        parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
+      } else {
+        parsedResponse = parseResponse
+          ? FacebookRequest.parseResponse<T>(rawResponse)
+          : rawResponse;
+      }
 
-    return payload ? parsedResponse.payload : parsedResponse;
+      return payload ? parsedResponse.payload : parsedResponse;
+    });
   }
 
   protected async _init(): Promise<this> {
