@@ -11,7 +11,7 @@ export function addFriend(request: FacebookRequest) {
       qs: {
         dpr: 1,
       },
-      form: {
+      data: {
         to_friend: id,
         action: 'add_friend',
         how_found: 'profile_button',

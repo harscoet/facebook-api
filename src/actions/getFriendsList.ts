@@ -14,7 +14,7 @@ export function getFriendsList(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: true,
-        form: {
+        data: {
           viewer: request.context.__user,
         },
       },

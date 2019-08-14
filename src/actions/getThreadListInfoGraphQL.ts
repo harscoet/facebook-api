@@ -12,7 +12,7 @@ export function getThreadListInfoGraphQL(request: FacebookRequest) {
      */
     const { before, limit = 20, tags } = options;
 
-    const form = {
+    const data = {
       batch_name: 'MessengerGraphQLThreadlistFetcherRe',
       queries: JSON.stringify({
         o0: {
@@ -31,7 +31,7 @@ export function getThreadListInfoGraphQL(request: FacebookRequest) {
     const result = await request.post<string>('api/graphqlbatch', {
       graphql: true,
       withContext: true,
-      form,
+      data,
     });
 
     const threads: {

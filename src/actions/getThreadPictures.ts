@@ -16,7 +16,7 @@ export function getThreadPictures(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: true,
-        form: {
+        data: {
           thread_id: threadId,
           offset,
           limit,

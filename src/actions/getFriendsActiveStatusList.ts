@@ -18,7 +18,7 @@ export function getFriendsActiveStatusList(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: true,
-        form: {
+        data: {
           data_fetch: true,
           __ajax__: 1,
         },

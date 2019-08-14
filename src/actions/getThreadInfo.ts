@@ -44,7 +44,7 @@ export function getThreadInfo(request: FacebookRequest) {
       throw new Error('timestamp option is required when offset > 0');
     }
 
-    const form: {
+    const data: {
       client: Thread.ListClient;
       messages: {};
     } = {
@@ -53,7 +53,7 @@ export function getThreadInfo(request: FacebookRequest) {
     };
 
     addPagination(
-      form.messages,
+      data.messages,
       'thread_ids',
       threadIds,
       limit,
@@ -61,14 +61,14 @@ export function getThreadInfo(request: FacebookRequest) {
       timestamp,
     );
     addPagination(
-      form.messages,
+      data.messages,
       'thread_fbids',
       threadFbids,
       limit,
       offset,
       timestamp,
     );
-    addPagination(form.messages, 'user_ids', userIds, limit, offset, timestamp);
+    addPagination(data.messages, 'user_ids', userIds, limit, offset, timestamp);
 
     return request.post<GetThreadInfo.Response>(
       'ajax/mercury/thread_info.php',
@@ -77,7 +77,7 @@ export function getThreadInfo(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: true,
-        form,
+        data,
       },
     );
   };

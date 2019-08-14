@@ -5,7 +5,6 @@ export * from './getPersonPhotos';
 export * from './getFriendsActiveStatusList';
 export * from './getFriendsList';
 export * from './getThreadInfo';
-export * from './getThreadListInfo';
 export * from './getThreadListInfoGraphQL';
 export * from './getThreadHistoryGraphQL';
 export * from './getThreadPictures';

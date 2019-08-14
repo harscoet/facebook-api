@@ -14,7 +14,7 @@ export function deleteThreads(request: FacebookRequest) {
         qs: {
           dpr: 2,
         },
-        form: {
+        data: {
           ids: arrify(ids),
         },
       },

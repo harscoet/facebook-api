@@ -11,7 +11,7 @@ export function getThreadHistoryGraphQL(request: FacebookRequest) {
      */
     const { before, limit = 20, threadId } = options;
 
-    const form = {
+    const data = {
       queries: JSON.stringify({
         o0: {
           doc_id: '1758598864152627', // This doc_id was valid on November 20th 2017.
@@ -29,7 +29,7 @@ export function getThreadHistoryGraphQL(request: FacebookRequest) {
     const result = await request.post<string>('api/graphqlbatch', {
       graphql: true,
       withContext: true,
-      form,
+      data,
     });
 
     const message: GetThreadHistoryGraphQL.Response = (result[0] as any).o0.data

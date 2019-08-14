@@ -18,7 +18,7 @@ function getThreadPictures(request) {
             withContext: true,
             parseResponse: true,
             payload: true,
-            form: {
+            data: {
                 thread_id: threadId,
                 offset,
                 limit,

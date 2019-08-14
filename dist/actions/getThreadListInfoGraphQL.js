@@ -16,7 +16,7 @@ function getThreadListInfoGraphQL(request) {
          * ex: result.messages.nodes[0].timestamp_precise
          */
         const { before, limit = 20, tags } = options;
-        const form = {
+        const data = {
             batch_name: 'MessengerGraphQLThreadlistFetcherRe',
             queries: JSON.stringify({
                 o0: {
@@ -34,7 +34,7 @@ function getThreadListInfoGraphQL(request) {
         const result = yield request.post('api/graphqlbatch', {
             graphql: true,
             withContext: true,
-            form,
+            data,
         });
         const threads = result[0].o0.data.viewer.message_threads;
         // With before option, facebook returns dupplicate message

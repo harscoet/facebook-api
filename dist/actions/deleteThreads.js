@@ -19,7 +19,7 @@ function deleteThreads(request) {
             qs: {
                 dpr: 2,
             },
-            form: {
+            data: {
                 ids: jsutil_1.arrify(ids),
             },
         });

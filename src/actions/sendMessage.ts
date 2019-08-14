@@ -16,7 +16,7 @@ export function sendMessage(request: FacebookRequest) {
 
     const messageId = generateOfflineThreadingID();
 
-    const form = {
+    const data = {
       client: 'mercury',
       action_type: 'ma-type:user-generated-message',
       timestamp: Date.now(),
@@ -40,7 +40,7 @@ export function sendMessage(request: FacebookRequest) {
       qs: {
         dpr: 2,
       },
-      form,
+      data,
     });
   };
 }

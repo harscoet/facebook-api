@@ -9,7 +9,7 @@ export function getUserInfo(request: FacebookRequest) {
       withContext: true,
       parseResponse: true,
       payload: true,
-      form: {
+      data: {
         ids: arrify(ids),
       },
     });

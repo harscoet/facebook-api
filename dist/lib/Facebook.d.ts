@@ -11,7 +11,6 @@ import { GetFriendsActiveStatusList } from '../actions/getFriendsActiveStatusLis
 import { GetFriendsList } from '../actions/getFriendsList';
 import { GetThreadHistoryGraphQL } from '../actions/getThreadHistoryGraphQL';
 import { GetThreadInfo } from '../actions/getThreadInfo';
-import { GetThreadListInfo } from '../actions/getThreadListInfo';
 import { GetThreadListInfoGraphQL } from '../actions/getThreadListInfoGraphQL';
 import { GetThreadPicture } from '../actions/getThreadPicture';
 import { GetThreadPictures } from '../actions/getThreadPictures';
@@ -31,7 +30,6 @@ export declare class Facebook extends AsyncLib {
     getFriendsActiveStatusList: GetFriendsActiveStatusList;
     getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
     getThreadInfo: GetThreadInfo;
-    getThreadListInfo: GetThreadListInfo;
     getThreadListInfoGraphQL: GetThreadListInfoGraphQL;
     getThreadPicture: GetThreadPicture;
     getThreadPictures: GetThreadPictures;

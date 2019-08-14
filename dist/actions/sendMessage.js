@@ -18,7 +18,7 @@ function sendMessage(request) {
             };
         }
         const messageId = util_1.generateOfflineThreadingID();
-        const form = {
+        const data = {
             client: 'mercury',
             action_type: 'ma-type:user-generated-message',
             timestamp: Date.now(),
@@ -41,7 +41,7 @@ function sendMessage(request) {
             qs: {
                 dpr: 2,
             },
-            form,
+            data,
         });
     });
 }

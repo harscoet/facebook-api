@@ -28,19 +28,19 @@ function getThreadInfo(request) {
         if (offset && !timestamp) {
             throw new Error('timestamp option is required when offset > 0');
         }
-        const form = {
+        const data = {
             client,
             messages: {},
         };
-        addPagination(form.messages, 'thread_ids', threadIds, limit, offset, timestamp);
-        addPagination(form.messages, 'thread_fbids', threadFbids, limit, offset, timestamp);
-        addPagination(form.messages, 'user_ids', userIds, limit, offset, timestamp);
+        addPagination(data.messages, 'thread_ids', threadIds, limit, offset, timestamp);
+        addPagination(data.messages, 'thread_fbids', threadFbids, limit, offset, timestamp);
+        addPagination(data.messages, 'user_ids', userIds, limit, offset, timestamp);
         return request.post('ajax/mercury/thread_info.php', {
             worksWithGetMethod: true,
             withContext: true,
             parseResponse: true,
             payload: true,
-            form,
+            data,
         });
     });
 }

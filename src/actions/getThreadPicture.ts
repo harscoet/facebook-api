@@ -12,7 +12,7 @@ export function getThreadPicture(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: false,
-        form: {
+        data: {
           thread_id: threadId,
           image_id: imageId,
         },

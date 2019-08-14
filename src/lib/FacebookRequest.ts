@@ -12,18 +12,13 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
   public static async request(
     options: AxiosRequestConfig,
     transform?: (payload: any) => any,
+    optionsForKey?: any,
   ) {
     const isDev = FacebookRequest.isDev;
     let sessionStorageKey: string;
 
     if (isDev) {
-      sessionStorageKey =
-        'fbapi_' +
-        JSON.stringify({
-          ...options,
-          headers: undefined,
-          cancelToken: undefined,
-        });
+      sessionStorageKey = 'fbapi_' + JSON.stringify(optionsForKey || options);
 
       const responseFromSessionStorage = sessionStorage.getItem(
         sessionStorageKey,
@@ -187,7 +182,6 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     const {
       url,
       domain,
-      form,
       data,
       qs,
       withContext,
@@ -195,52 +189,63 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
       payload,
       method,
     } = options;
-    const domainValue = FacebookRequest.getDomainValue(domain);
 
     if (withContext && this.context) {
       this.context.__req++;
     }
 
-    const fullData = Object.assign(
-      {},
-      withContext ? this.context : {},
-      data,
-      form,
-    );
-    const dataString = FacebookRequest.stringifyQuery(fullData);
-    const params =
-      method === 'get' && withContext ? { ...this.context, ...qs } : qs;
-
-    const requestOptions = Object.assign({}, options, {
+    const baseRequestOptions = {
+      baseURL: FacebookRequest.getDomainValue(domain),
+      url,
       method:
         this._options.forceGet && options.worksWithGetMethod
           ? 'get'
           : options.method,
+      params: method === 'get' && withContext ? { ...this.context, ...qs } : qs,
+    };
+
+    const requestOptions = {
+      ...options,
+      ...baseRequestOptions,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      url,
-      params,
-      baseURL: domainValue,
-      data: new URLSearchParams(dataString),
       cancelToken: this.tokenSource.token,
-    });
+      data: new URLSearchParams(
+        FacebookRequest.stringifyQuery({
+          ...(withContext ? this.context : {}),
+          ...data,
+        }),
+      ),
+    };
 
     if (options.graphql) {
       requestOptions.responseType = 'text';
     }
 
-    return FacebookRequest.request(requestOptions, rawResponse => {
-      let parsedResponse: any;
+    return FacebookRequest.request(
+      requestOptions,
+      rawResponse => {
+        let parsedResponse: any;
 
-      if (options.graphql) {
-        parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
-      } else {
-        parsedResponse = parseResponse
-          ? FacebookRequest.parseResponse<T>(rawResponse)
-          : rawResponse;
-      }
+        if (options.graphql) {
+          parsedResponse = rawResponse.split('\r\n').map(JSON.parse);
+        } else {
+          parsedResponse = parseResponse
+            ? FacebookRequest.parseResponse<T>(rawResponse)
+            : rawResponse;
+        }
 
-      return payload ? parsedResponse.payload : parsedResponse;
-    });
+        return payload ? parsedResponse.payload : parsedResponse;
+      },
+      {
+        ...baseRequestOptions,
+        data: withContext
+          ? {
+              __user: this.context.__user,
+              ...data,
+            }
+          : data,
+      },
+    );
   }
 
   protected async _init(): Promise<this> {
@@ -269,7 +274,6 @@ export namespace FacebookRequest {
 
   export interface Options extends AxiosRequestConfig {
     domain?: Domain;
-    form?: object;
     qs?: object;
     payload?: boolean;
     graphql?: boolean;
