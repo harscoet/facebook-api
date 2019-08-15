@@ -19,29 +19,26 @@ import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
 export declare class Facebook extends AsyncLib {
-  types: typeof types;
-  lib: typeof lib;
-  actions: typeof actions;
-  addFriend: AddFriend;
-  deleteThreads: DeleteThreads;
-  getAttachmentImage: GetAttachmentImage;
-  getFriendsList: GetFriendsList;
-  getPersonPhotos: GetPersonPhotos;
-  getFriendsActiveStatusList: GetFriendsActiveStatusList;
-  getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
-  getThreadInfo: GetThreadInfo;
-  getThreadListInfoGraphQL: GetThreadListInfoGraphQL;
-  getThreadPicture: GetThreadPicture;
-  getThreadPictures: GetThreadPictures;
-  getUserInfo: GetUserInfo;
-  getSharedMedia: GetSharedMedia;
-  sendMessage: SendMessage;
-  searchPeople: SearchPeople;
-  request: FacebookRequest;
-  constructor(
-    options?: FacebookRequest.DefaultOptions,
-    request?: FacebookRequest,
-  );
-  getContext(): Promise<FacebookRequest.Context>;
-  getUserId(): Promise<string>;
+    types: typeof types;
+    lib: typeof lib;
+    actions: typeof actions;
+    addFriend: AddFriend;
+    deleteThreads: DeleteThreads;
+    getAttachmentImage: GetAttachmentImage;
+    getFriendsList: GetFriendsList;
+    getPersonPhotos: GetPersonPhotos;
+    getFriendsActiveStatusList: GetFriendsActiveStatusList;
+    getThreadHistoryGraphQL: GetThreadHistoryGraphQL;
+    getThreadInfo: GetThreadInfo;
+    getThreadListInfoGraphQL: GetThreadListInfoGraphQL;
+    getThreadPicture: GetThreadPicture;
+    getThreadPictures: GetThreadPictures;
+    getUserInfo: GetUserInfo;
+    getSharedMedia: GetSharedMedia;
+    sendMessage: SendMessage;
+    searchPeople: SearchPeople;
+    request: FacebookRequest;
+    constructor(options?: FacebookRequest.DefaultOptions, request?: FacebookRequest);
+    getContext(): Promise<FacebookRequest.Context>;
+    getUserId(): Promise<string>;
 }
