@@ -18,3 +18,4 @@ __export(require("./getSharedMedia"));
 __export(require("./getUserInfo"));
 __export(require("./searchPeople"));
 __export(require("./sendMessage"));
+__export(require("./resolveMediaUrl"));

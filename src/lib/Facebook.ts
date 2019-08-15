@@ -18,6 +18,7 @@ import { GetSharedMedia } from '../actions/getSharedMedia';
 import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
+import { ResolveMediaUrl } from '../actions/resolveMediaUrl';
 
 export class Facebook extends AsyncLib {
   public types = types;
@@ -39,6 +40,7 @@ export class Facebook extends AsyncLib {
   public getSharedMedia: GetSharedMedia;
   public sendMessage: SendMessage;
   public searchPeople: SearchPeople;
+  public resolveMediaUrl: ResolveMediaUrl;
 
   public request: FacebookRequest;
 

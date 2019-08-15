@@ -18,6 +18,7 @@ import { GetSharedMedia } from '../actions/getSharedMedia';
 import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
+import { ResolveMediaUrl } from '../actions/resolveMediaUrl';
 export declare class Facebook extends AsyncLib {
     types: typeof types;
     lib: typeof lib;
@@ -37,6 +38,7 @@ export declare class Facebook extends AsyncLib {
     getSharedMedia: GetSharedMedia;
     sendMessage: SendMessage;
     searchPeople: SearchPeople;
+    resolveMediaUrl: ResolveMediaUrl;
     request: FacebookRequest;
     constructor(options?: FacebookRequest.DefaultOptions, request?: FacebookRequest);
     getContext(): Promise<FacebookRequest.Context>;
