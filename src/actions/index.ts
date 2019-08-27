@@ -14,3 +14,4 @@ export * from './getUserInfo';
 export * from './searchPeople';
 export * from './sendMessage';
 export * from './resolveMediaUrl';
+export * from './getUserIdFromVanity';
