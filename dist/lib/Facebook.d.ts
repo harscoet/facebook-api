@@ -19,7 +19,7 @@ import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
 import { ResolveMediaUrl } from '../actions/resolveMediaUrl';
-import { GetUserIdFromVanity } from '../actions/getUserIdFromVanity';
+import { GetUserInfoFromVanity } from '../actions/getUserInfoFromVanity';
 export declare class Facebook extends AsyncLib {
     types: typeof types;
     lib: typeof lib;
@@ -40,7 +40,7 @@ export declare class Facebook extends AsyncLib {
     sendMessage: SendMessage;
     searchPeople: SearchPeople;
     resolveMediaUrl: ResolveMediaUrl;
-    getUserIdFromVanity: GetUserIdFromVanity;
+    getUserInfoFromVanity: GetUserInfoFromVanity;
     request: FacebookRequest;
     constructor(options?: FacebookRequest.DefaultOptions, request?: FacebookRequest);
     getContext(): Promise<FacebookRequest.Context>;

@@ -19,4 +19,4 @@ __export(require("./getUserInfo"));
 __export(require("./searchPeople"));
 __export(require("./sendMessage"));
 __export(require("./resolveMediaUrl"));
-__export(require("./getUserIdFromVanity"));
+__export(require("./getUserInfoFromVanity"));

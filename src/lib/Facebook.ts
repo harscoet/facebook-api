@@ -19,7 +19,7 @@ import { GetUserInfo } from '../actions/getUserInfo';
 import { SearchPeople } from '../actions/searchPeople';
 import { SendMessage } from '../actions/sendMessage';
 import { ResolveMediaUrl } from '../actions/resolveMediaUrl';
-import { GetUserIdFromVanity } from '../actions/getUserIdFromVanity';
+import { GetUserInfoFromVanity } from '../actions/getUserInfoFromVanity';
 
 export class Facebook extends AsyncLib {
   public types = types;
@@ -42,7 +42,7 @@ export class Facebook extends AsyncLib {
   public sendMessage: SendMessage;
   public searchPeople: SearchPeople;
   public resolveMediaUrl: ResolveMediaUrl;
-  public getUserIdFromVanity: GetUserIdFromVanity;
+  public getUserInfoFromVanity: GetUserInfoFromVanity;
 
   public request: FacebookRequest;
 
