@@ -6,7 +6,7 @@ export function deleteThreads(request: FacebookRequest) {
     await request.init();
 
     return request.post<DeleteThreads.Response>(
-      'ajax/mercury/delete_thread.phpd',
+      'ajax/mercury/delete_thread.php',
       {
         withContext: true,
         parseResponse: true,

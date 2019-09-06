@@ -12,7 +12,7 @@ const jsutil_1 = require("jsutil");
 function deleteThreads(request) {
     return (ids) => __awaiter(this, void 0, void 0, function* () {
         yield request.init();
-        return request.post('ajax/mercury/delete_thread.phpd', {
+        return request.post('ajax/mercury/delete_thread.php', {
             withContext: true,
             parseResponse: true,
             payload: true,
