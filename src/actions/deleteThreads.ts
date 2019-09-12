@@ -11,9 +11,6 @@ export function deleteThreads(request: FacebookRequest) {
         withContext: true,
         parseResponse: true,
         payload: true,
-        qs: {
-          dpr: 2,
-        },
         data: {
           ids: arrify(ids),
         },

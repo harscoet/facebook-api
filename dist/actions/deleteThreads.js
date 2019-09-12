@@ -16,9 +16,6 @@ function deleteThreads(request) {
             withContext: true,
             parseResponse: true,
             payload: true,
-            qs: {
-                dpr: 2,
-            },
             data: {
                 ids: jsutil_1.arrify(ids),
             },
