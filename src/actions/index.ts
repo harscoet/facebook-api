@@ -1,4 +1,5 @@
 export * from './addFriend';
+export * from './deleteMessages';
 export * from './deleteThreads';
 export * from './getAttachmentImage';
 export * from './getPersonPhotos';

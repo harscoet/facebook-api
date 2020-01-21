@@ -152,7 +152,9 @@ class FacebookRequest extends AsyncLib_1.AsyncLib {
                     : options.method,
                 params: method === 'get' && withContext ? Object.assign({}, this.context, qs) : qs,
             };
-            const requestOptions = Object.assign({}, options, baseRequestOptions, { headers: { 'content-type': 'application/x-www-form-urlencoded' }, cancelToken: this.tokenSource.token, data: new URLSearchParams(FacebookRequest.stringifyQuery(Object.assign({}, (withContext ? this.context : {}), data))) });
+            const requestOptions = Object.assign({}, options, baseRequestOptions, { headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                }, cancelToken: this.tokenSource.token, data: new URLSearchParams(FacebookRequest.stringifyQuery(Object.assign({}, (withContext ? this.context : {}), data))) });
             if (options.graphql) {
                 requestOptions.responseType = 'text';
             }

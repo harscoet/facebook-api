@@ -207,7 +207,9 @@ export class FacebookRequest extends AsyncLib<FacebookRequest.DefaultOptions> {
     const requestOptions = {
       ...options,
       ...baseRequestOptions,
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
       cancelToken: this.tokenSource.token,
       data: new URLSearchParams(
         FacebookRequest.stringifyQuery({

@@ -4,6 +4,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./addFriend"));
+__export(require("./deleteMessages"));
 __export(require("./deleteThreads"));
 __export(require("./getAttachmentImage"));
 __export(require("./getPersonPhotos"));

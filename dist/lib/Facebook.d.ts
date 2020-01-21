@@ -4,6 +4,7 @@ import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { AddFriend } from '../actions/addFriend';
+import { DeleteMessages } from '../actions/deleteMessages';
 import { DeleteThreads } from '../actions/deleteThreads';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
 import { GetPersonPhotos } from '../actions/getPersonPhotos';
@@ -25,6 +26,7 @@ export declare class Facebook extends AsyncLib {
     lib: typeof lib;
     actions: typeof actions;
     addFriend: AddFriend;
+    deleteMessages: DeleteMessages;
     deleteThreads: DeleteThreads;
     getAttachmentImage: GetAttachmentImage;
     getFriendsList: GetFriendsList;

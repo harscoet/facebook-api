@@ -4,6 +4,7 @@ import * as lib from '.';
 import { AsyncLib } from '../lib/AsyncLib';
 import { FacebookRequest } from '../lib/FacebookRequest';
 import { AddFriend } from '../actions/addFriend';
+import { DeleteMessages } from '../actions/deleteMessages';
 import { DeleteThreads } from '../actions/deleteThreads';
 import { GetAttachmentImage } from '../actions/getAttachmentImage';
 import { GetPersonPhotos } from '../actions/getPersonPhotos';
@@ -27,6 +28,7 @@ export class Facebook extends AsyncLib {
   public actions = actions;
 
   public addFriend: AddFriend;
+  public deleteMessages: DeleteMessages;
   public deleteThreads: DeleteThreads;
   public getAttachmentImage: GetAttachmentImage;
   public getFriendsList: GetFriendsList;
